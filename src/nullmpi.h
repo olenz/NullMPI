@@ -24,21 +24,14 @@
 # define TRUE !FALSE
 #endif
 
-/* DEBUG */
-/* #define __PRINT_ASSERT_FUNCTION */
-
-#if HAVE_STRINGIZE
-# if defined __ASSERT_FUNCTION && __PRINT_ASSERT_FUNCTION
-#  define NULLMPI_STATS nullmpi_stats(__ASSERT_FUNCTION)
-# else
-#  if HAVE_FUNC
-#   define NULLMPI_STATS nullmpi_stats(__func__)
-#  else
-#   define NULLMPI_STATS
-#  endif
-# endif
+#if defined __ASSERT_FUNCTION
+# define NULLMPI_STATS nullmpi_stats(__ASSERT_FUNCTION)
 #else
-# define NULLMPI_STATS
+# if HAVE_FUNC
+#  define NULLMPI_STATS nullmpi_stats(__func__)
+# else
+#  define NULLMPI_STATS
+# endif
 #endif
 
 #define NULLMPI_PROCESSOR_NAME "supercomputer"

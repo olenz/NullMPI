@@ -52,7 +52,7 @@ AC_C_CONST
 AC_C_VAR_FUNC
 
 # Checks for library functions.
-AC_CHECK_FUNCS([memcpy])
+AC_CHECK_FUNCS([memcpy gettimeofday getrusage])
 
 # Checks for system services
 
