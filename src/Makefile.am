@@ -53,6 +53,7 @@ PRIVATEAPISOURCES = \
 	mpi_gather.c \
 	mpi_gatherv.c \
 	mpi_get_count.c \
+	mpi_get_elements.c \
 	mpi_get_processor_name.c \
 	mpi_get_version.c \
 	mpi_ibsend.c \
@@ -66,6 +67,8 @@ PRIVATEAPISOURCES = \
 	mpi_issend.c \
 	mpi_op_create.c \
 	mpi_op_free.c \
+	mpi_pack.c \
+	mpi_pack_size.c \
 	mpi_pcontrol.c \
 	mpi_probe.c \
 	mpi_recv.c \
@@ -90,7 +93,13 @@ PRIVATEAPISOURCES = \
 	mpi_testall.c \
 	mpi_testsome.c \
 	mpi_type_commit.c \
+	mpi_type_contiguous.c \
+	mpi_type_free.c \
+	mpi_type_indexed.c \
+	mpi_type_size.c \
 	mpi_type_struct.c \
+	mpi_type_vector.c \
+	mpi_unpack.c \
 	mpi_wait.c \
 	mpi_waitall.c \
 	mpi_waitany.c \
