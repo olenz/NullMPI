@@ -6,6 +6,7 @@ version="echo @PACKAGE@-@VERSION@"
 case $ZSH_VERSION in ?*) alias -g '${1+"$@"}="$@"';; esac
 
 eat=no
+fin=
 for arg
 do
 	shift
@@ -17,7 +18,7 @@ do
 		no)
 		;;
 	esac
-	case $arg in
+	case $fin$arg in
 		-h|--help)
 		$usage
 		exit 0
@@ -42,7 +43,7 @@ do
 		;;
 		*)
 		set x ${1+"$@"} "$arg"; shift
-		break
+		fin=yes
 		;;
 	esac
 done
