@@ -12,7 +12,7 @@ void nullmpi_initialize(void)
 
 int nullmpi_initialized(void)
 {
-  return initialized;
+  return initialized == 1;	/* we want errors after finalize */
 }
 
 void nullmpi_finalize(void)
