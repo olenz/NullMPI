@@ -38,5 +38,5 @@ do
 	esac
 done
 
-exec "$@"
+exec ${1+"$@"}
 exit 1
