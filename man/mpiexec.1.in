@@ -8,11 +8,11 @@ mpiexec, mpirun \- run MPI programs
 .B mpirun
 [\fB\-hv\fR] [\fB\-n=\fIP\fR|\fB\-np=\fIP\fR] program [\fIargs\fI]...
 .SH DESCRIPTION
-This command can be used to execute MPI programs.
+These commands can be used to execute MPI programs.
 .SH OPTIONS
 .TP
 .B -h
-give short help
+give short help.
 .TP
 .B -v
 print version.

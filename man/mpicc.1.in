@@ -11,7 +11,7 @@ needed to compile and link MPI programs.
 .SH OPTIONS
 .TP
 .B -h
-give short help
+give short help.
 .TP
 .B -v
 print version.
