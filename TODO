@@ -7,10 +7,13 @@ User-defined datatypes do not work.
 User-defined MPI_Op's do not work.
 
 MPI_Errhandler do not work.
+Could use MPI_ERRORS_ARE_FATAL or MPI_ERRORS_RETURN,
+use MPI2 MPI_Comm_set_errhandler to set.
+
+Could use MPI_Pcontrol for output control.
 
 MPI_Cart* do not do the right thing.
 
+make MPI_Wtime more portable.  Can MPI_Wtick be made more accurate?
 
-
-make MPI_Wtime portable *and* exact.
-test __func__ and __FUNC__ before using.
+use dist-hook: or similar to update ChangeLog automagically.

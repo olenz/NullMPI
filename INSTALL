@@ -3,4 +3,5 @@ The usual GNU installation instructions apply.
   make
   make install
 
-Adding `-Wno-unused' to CFLAGS is recommended for gcc.
+Adding `-Wno-unused' to CFLAGS is recommended for gcc
+(and similar flags for other compilers).

@@ -301,10 +301,10 @@ typedef int (MPI_Delete_function)(MPI_Comm, int, void *, void *);
 #define MPIR_ERRORS_WARN	(MPI_Errhandler)3	/*FIXME*/
 
 /* permanent key values */
-#define MPI_TAG_UB		4
-#define MPI_HOST		5
-#define MPI_IO			6
-#define MPI_WTIME_IS_GLOBAL	7
+#define MPI_TAG_UB		9999
+#define MPI_HOST		0
+#define MPI_IO			0
+#define MPI_WTIME_IS_GLOBAL	1
 
 /* pre-defined constants */
 #define MPI_UNDEFINED		-8
@@ -316,9 +316,9 @@ typedef int (MPI_Delete_function)(MPI_Comm, int, void *, void *);
 #define MPI_CART		12
 
 /* various */
-#define MPI_PROC_NULL		13
-#define MPI_ANY_SOURCE		14
-#define MPI_ANY_TAG		15
+#define MPI_PROC_NULL		-13
+#define MPI_ANY_SOURCE		-14
+#define MPI_ANY_TAG		(MPI_TAG_UB+1)
 
 /* output of MPI_Group_compare and MPI_Comm_compare */
 #define MPI_IDENT		16

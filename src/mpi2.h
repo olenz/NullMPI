@@ -1,4 +1,6 @@
-
+#ifndef __NULLMPI_INCLUDE_MPI_H__
+# error "do not include this file directly, include mpi.h instead"
+#endif
 
 /* these are taken from mpi20-ps */
 

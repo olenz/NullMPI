@@ -77,3 +77,22 @@ int MPI_Intercomm_merge(MPI_Comm comm, int high,
                         MPI_Comm *comm_out);
 
 int MPI_Topo_test(MPI_Comm comm, int *type);
+
+
+/* MPI2 */
+#ifdef _NULLMPI_USE_MPI2_FEATURES
+
+int MPI_Comm_create_errhandler(MPI_Comm_errhandler_fn *function,
+    MPI_Errhandler *errhandler);
+
+int MPI_Comm_get_errhandler(MPI_Comm comm,
+    MPI_Errhandler *errhandler);
+
+int MPI_Comm_set_errhandler(MPI_Comm comm,
+    MPI_Errhandler errhandler)
+{
+  NULLMPI_STATS;
+  return nullmpi_set_errhandler(comm, &errhandler);
+}
+
+#endif /* _NULLMPI_USE_MPI2_FEATURES */

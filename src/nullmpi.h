@@ -1,7 +1,11 @@
 /* $Id$ */
 /* private data and portability header */
 
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#else
+# error "compilation without config.h header not supported."
+#endif
 
 #if STDC_HEADERS
 # include <stdio.h>
@@ -37,7 +41,8 @@
 #define NULLMPI_PROCESSOR_NAME "supercomputer"
 
 extern int nullmpi_print(const char *string);
-#define nullmpi_stats(func) nullmpi_print(func)
+extern int nullmpi_checkinit_print(const char *string);
+#define nullmpi_stats(func) nullmpi_checkinit_print(func)
 #define nullmpi_assert(EXPR) assert(EXPR)
 
 extern void nullmpi_initialize(void);

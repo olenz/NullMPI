@@ -3,21 +3,25 @@
 
 #include "nullmpi.h"
 
-static int initialized;
+static enum {
+ nullmpi_before_MPI_Init,
+ nullmpi_after_MPI_Init,
+ nullmpi_after_MPI_Finalize
+} initialized;
 
 void nullmpi_initialize(void)
 {
-  initialized = 1;
+  initialized = nullmpi_after_MPI_Init;
 }
 
 int nullmpi_initialized(void)
 {
-  return initialized == 1;	/* we want errors after finalize */
+  return initialized == nullmpi_after_MPI_Init;	/* we want errors after finalize */
 }
 
 void nullmpi_finalize(void)
 {
-  initialized = 2;
+  initialized = nullmpi_after_MPI_Finalize;
 }
 
 void nullmpi_abort(int error)
@@ -26,11 +30,47 @@ void nullmpi_abort(int error)
   exit(error);
 }
 
+static MPI_Errhandler nullmpi_errhandler = MPI_ERRORS_RETURN;
+
+static int nullmpi_handle_error(const char *s)
+{
+  nullmpi_print("an error occured");
+  nullmpi_print(s);
+  switch (nullmpi_errhandler) {
+  case MPI_ERRORS_ARE_FATAL:
+    nullmpi_abort(127);
+  case MPI_ERRORS_RETURN:
+    return -1;
+  default:
+    nullmpi_print("errhandler not implemented");
+    return -1;
+  }
+}
+
+static int nullmpi_set_errhandler(MPI_Comm comm, MPI_Errhandler *errhandler)
+{
+  switch (nullmpi_errhandler) {
+  case MPI_ERRORS_ARE_FATAL:
+    nullmpi_abort(127);
+  case MPI_ERRORS_RETURN:
+    return -1;
+  default:
+    return nullmpi_unsupported();
+  }
+}
+
 int nullmpi_print(const char *string)
 {
-  fprintf (stderr, "nullmpi: %s.\n", string);
-  nullmpi_assert (initialized == 1);
-  return 0;
+  return fprintf (stderr, "nullmpi: %s.\n", string);
+}
+
+int nullmpi_checkinit_print(const char *string)
+{
+  nullmpi_print (string);
+  if (initialized != nullmpi_after_MPI_Init)
+    return nullmpi_handle_error("MPI function called outside MPI_Init and MPI_Finalize");
+  else
+    return 0;
 }
 
 int nullmpi_unsupported(void)

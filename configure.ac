@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.57)
-AC_INIT([nullmpi], [0.01], [wildenhues@ins.uni-bonn.de])
+AC_INIT([nullmpi], [0.02], [wildenhues@ins.uni-bonn.de])
 AC_REVISION($Revision$)
 AC_CONFIG_SRCDIR([src/mpi.c])
 AC_CONFIG_AUX_DIR(config)
