@@ -1,6 +1,6 @@
 Many functions are not implemented at all.
 
-Point-to-point communication does not work at all except MPI_Sendrecv.
+Some Point-to-point functions do not work.  Some nonblocking stuff missing.
 
 User-defined datatypes do not work.
 
@@ -10,8 +10,6 @@ MPI_Errhandler do not work.
 Could use MPI_ERRORS_ARE_FATAL or MPI_ERRORS_RETURN,
 use MPI2 MPI_Comm_set_errhandler to set.
 
-Could use MPI_Pcontrol for output control.
-
 MPI_Cart* do not do the right thing.
 
 make MPI_Wtime more portable.  Can MPI_Wtick be made more accurate?
@@ -20,3 +18,5 @@ use dist-hook: or similar to update ChangeLog automagically.
 
 PMPI_* weak symbols.
 One public function per file, since they have to be overridable one by one.
+
+nullmpi_conf.h is not always updated correctly.

@@ -1,3 +1,8 @@
+nullmpi-0.6:
+- MPI_Pcontrol for debug output available.
+- some nonblocking functions added.
+- splint annotations improved.
+
 nullmpi-0.5 released.
 - bug fixes in mpi* scripts, MPI_Cart_create.
 
