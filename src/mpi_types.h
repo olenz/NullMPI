@@ -2,6 +2,8 @@
 # error "do not include this file directly, include mpi.h instead"
 #endif
 
+#include <stddef.h>	/* size_t */
+
 /* We're keeping the splint declarations of the types and constants
  * separate from the actual C declarations, because in the splint
  * version we absolutely want mininal implementation-specific information.
@@ -281,14 +283,10 @@ typedef struct
   int MPI_SOURCE;
   int MPI_TAG;
   int MPI_ERROR;
-  int count;
-  int private_count;
+  size_t size;
 } MPI_Status;
 
-typedef struct
-{
-  int dummy;
-} *MPI_Request;
+typedef struct ptplist *MPI_Request;
 
 typedef void (MPI_User_function)(void *, void *, int *, MPI_Datatype *);
 #if _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
