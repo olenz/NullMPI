@@ -79,7 +79,7 @@ dnl   #ifndef _testpkg_const
 dnl   #define _testpkg_const const
 dnl   #endif
 dnl
-dnl @version $Id$
+dnl @version Id: ax_prefix_config_h.m4,v 1.4 2003/11/29 08:13:03 guidod Exp 
 dnl @author  Guiodo Draheim <guidod@gmx.de>
 dnl
 AC_DEFUN([AX_PREFIX_CONFIG_H],[AC_REQUIRE([AC_CONFIG_HEADER])
@@ -97,17 +97,17 @@ _DEF=`echo _$_OUT | sed -e "y:m4_cr_letters:m4_cr_LETTERS[]:" -e "s/@<:@^m4_cr_L
 _PKG=`echo ifelse($2, , $PACKAGE, $2)`
 _LOW=`echo _$_PKG | sed -e "y:m4_cr_LETTERS-:m4_cr_letters[]_:"`
 _UPP=`echo $_PKG | sed -e "y:m4_cr_letters-:m4_cr_LETTERS[]_:"  -e "/^@<:@m4_cr_digits@:>@/s/^/_/"`
-_INP=`echo ifelse($3, , _, $3)`
-if test "$ac_prefix_conf_INP" = "_"; then
+_INP=`echo "ifelse($3,,,$3)" | sed -e 's/ *//'`
+if test ".$_INP" = "."; then
    for ac_file in : $CONFIG_HEADERS; do test "_$ac_file" = _: && continue
-     test -f "$ac_prefix_conf_INP" && continue
-     case $ac_file in
-        *.h) test -f $ac_file && _INP=$ac_file ;;
+     case "$ac_file" in
+        *.h) _INP=$ac_file ;;
         *)
      esac
+     test ".$_INP" != "." && break
    done
 fi
-if test "$_INP" = "_"; then
+if test ".$_INP" = "."; then
    case "$_OUT" in
       */*) _INP=`basename "$_OUT"`
       ;;
