@@ -19,17 +19,15 @@ static ptplist sendlist[1] = { { sendlist, sendlist, NULL, 0, 0, MPI_COMM_NULL, 
 static ptplist recvlist[1] = { { recvlist, recvlist, NULL, 0, 0, MPI_COMM_NULL, 0, 0 } };
 
 static void
-nullmpi_append_ptp(/*@dependent@*/ ptplist *list, /*@null@*/ /*@dependent@*/ ptplist *r)
+nullmpi_append_ptp(/*@dependent@*/ ptplist *list, /*@dependent@*/ ptplist *r)
   /*@requires notnull list->next, list->prev@*/
 {
-  if (r) {
-    nullmpi_assert(r->next == NULL);
-    nullmpi_assert(r->prev == NULL);
-    r->next = list;
-    r->prev = list->prev;
-    list->prev->next = r;
-    list->prev = r;
-  }
+  nullmpi_assert(r->next == NULL);
+  nullmpi_assert(r->prev == NULL);
+  r->next = list;
+  r->prev = list->prev;
+  list->prev->next = r;
+  list->prev = r;
 }
 
 static void
