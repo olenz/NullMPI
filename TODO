@@ -22,3 +22,5 @@ PMPI_* weak symbols.
 One public function per file, since they have to be overridable one by one.
 
 nullmpi_conf.h is not always updated correctly.
+
+Use nullmpi_handle_error for all possible errors.
