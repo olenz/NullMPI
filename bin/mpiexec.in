@@ -3,6 +3,8 @@ prog="$0"
 usage="echo $prog [ -hv ] [ -n <procs> | -np <procs> ] <program>"
 version="echo @PACKAGE@-@VERSION@"
 
+case $ZSH_VERSION in ?*) alias -g '${1+"$@"}="$@"';; esac
+
 eat=no
 for arg
 do
