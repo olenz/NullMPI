@@ -49,7 +49,6 @@ int MPI_Comm_split(MPI_Comm comm, int color, int key, MPI_Comm *comm_out)
   return MPI_SUCCESS;
 }
 
-
 int MPI_Comm_free(MPI_Comm *comm)
 {
   NULLMPI_STATS;

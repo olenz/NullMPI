@@ -12,6 +12,8 @@ PRIVATESOURCES = \
 	mpi_cart.c \
 	mpi_coll.c \
 	mpi_comm.c \
+	mpi_grp.c \
 	mpi_ptp.c \
+	mpi_type.c \
 	nullmpi.c \
 	wtime.c

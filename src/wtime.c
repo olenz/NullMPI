@@ -40,3 +40,6 @@ double MPI_Wtime (void)
   return (double)clock () / (double)CLOCKS_PER_SEC;
 #endif
 }
+
+/* FIXME: this one needs a lot of work */
+double MPI_Wtick(void);

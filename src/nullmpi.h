@@ -47,5 +47,7 @@ extern int nullmpi_print(const char *string);
 #define nullmpi_assert(EXPR) assert(EXPR)
 
 extern void nullmpi_initialize(void);
+extern int nullmpi_initialized(void);
 extern void nullmpi_finalize(void);
 extern void nullmpi_abort(int);
+extern int nullmpi_unsupported(void);

@@ -348,12 +348,6 @@ extern int MPI_Reduce(void *sendbuf, /*@out@*/ /*@null@*/ void *recvbuf,
     /*@modifies recvbuf@*/
     /*@requires maxRead(sendbuf) >= (count-1)@*/ ;
 
-extern int MPI_Op_create(MPI_User_function *function, int commute,
-    /*@out@*/ MPI_Op *op)
-    /*@modifies op@*/ ;
-
-extern int MPI_Op_free(MPI_Op *op);
-
 extern int MPI_Allreduce(void *sendbuf, /*@out@*/ /*@unique@*/ void *recvbuf,
     int count, MPI_Datatype datatype, MPI_Op op, MPI_Comm comm)
     /*@modifies recvbuf@*/
@@ -371,6 +365,12 @@ extern int MPI_Scan(void *sendbuf, /*@out@*/ void *recvbuf,
     /*@requires maxRead(sendbuf) >= (count-1)
              /\ maxSet(recvbuf) >= (count-1)@*/
     /*@ensures maxRead(recvbuf) == (count-1)@*/ ;
+
+extern int MPI_Op_create(MPI_User_function *function, int commute,
+    /*@out@*/ MPI_Op *op)
+    /*@modifies op@*/ ;
+
+extern int MPI_Op_free(MPI_Op *op);
 
 extern int MPI_Group_size(MPI_Group group, /*@out@*/ int *size)
     /*@modifies size@*/ ;
@@ -581,8 +581,8 @@ extern int MPI_Error_string(int errorcode,
 extern int MPI_Error_class(int errorcode, /*@out@*/ int *errorclass)
     /*@modifies errorclass@*/ ;
 
-double MPI_Wtime(void) /*@*/ ;
-double MPI_Wtick(void) /*@*/ ;
+extern double MPI_Wtime(void) /*@*/ ;
+extern double MPI_Wtick(void) /*@*/ ;
 
 
 /* MPI_Init and MPI_Finalize should be called in a complete MPI program,
