@@ -1,4 +1,4 @@
-nullmpi-0.3
+nullmpi-0.3 released.
 - MPI2 prototypes enabled.
 - deprecate but enable MPI1 legacy functions (gcc will emit warning).
 - fix quoting in compiler scripts.
