@@ -1,3 +1,7 @@
+nullmpi-0.4 released.
+- prototype fix: MPI_Request must be assignable.
+- bug fixes for older automake.
+
 nullmpi-0.3 released.
 - MPI2 prototypes enabled.
 - deprecate but enable MPI1 legacy functions (gcc will emit warning).
