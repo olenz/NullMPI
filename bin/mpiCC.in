@@ -45,6 +45,7 @@ esac
 case $DoCompile in
 	0)
 	MPICPPFLAGS=
+	;;
 esac
 
 exec $MPICXX $MPICPPFLAGS ${1+"$@"} $MPILDFLAGS

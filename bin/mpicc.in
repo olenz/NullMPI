@@ -34,6 +34,7 @@ do
 		-cc=*)
 		MPICC=`echo x$arg | sed 's/x-cc=//'`
 		continue
+		;;
 	esac
 	set x ${1+"$@"} "$arg"; shift
 done
@@ -45,6 +46,7 @@ esac
 case $DoCompile in
 	0)
 	MPICPPFLAGS=
+	;;
 esac
 
 exec $MPICC $MPICPPFLAGS ${1+"$@"} $MPILDFLAGS
