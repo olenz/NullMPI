@@ -19,19 +19,12 @@ int MPI_Init(int *argc, char ***argv)
 .PD 1
 .SH ERRORS
  
-All MPI routines (except
-.I MPI_Wtime
-and
-.I MPI_Wtick
-) return an error value;
+All MPI routines (except \fIMPI_Wtime\fR and \fIMPI_Wtick\fR) return an error value;
 C routines as the value of the function and Fortran routines in the last
 argument.  Before the value is returned, the current MPI error handler is
 called.  By default, this error handler aborts the MPI job.  The error handler
-may be changed with
-.I MPI_Errhandler_set
-; the predefined error handler
-.I MPI_ERRORS_RETURN
-may be used to cause error values to be returned.
+may be changed with \fIMPI_Errhandler_set\fR; the predefined error handler
+\fIMPI_ERRORS_RETURN\fR) may be used to cause error values to be returned.
 Note that MPI does
 .B not
 guarantee that an MPI program can continue past
@@ -46,11 +39,9 @@ an error.
 .TP
 .B MPI_ERR_OTHER
 - This error class is associated with an error code that
-indicates that an attempt was made to call
-.I MPI_INIT
+indicates that an attempt was made to call \fIMPI_INIT\fR
 a second time.
-.I MPI_INIT
-may only be called once in a program.
+\fIMPI_INIT\fR may only be called once in a program.
 .PD 1
 .SH SIGNALS USED
 The MPI standard requires that all signals used be documented.
