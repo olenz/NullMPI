@@ -16,7 +16,7 @@ unset DISPLAY
 
 # get a clean tree.
 tdir=`mktemp -d /tmp/inst-$name.XXXXXX`
-trap "echo please \"chmod -R u+w $tdir && rm -rf $tdir\"" 0 1 2 3 13 15
+trap "echo Please 'chmod -R u+w $tdir && rm -rf $tdir'." 0 1 2 3 13 15
 cd $tdir
 cvs -d :ext:$USER@adamantium:/home/wildenhu/cvsroot co $name
 cd $name
