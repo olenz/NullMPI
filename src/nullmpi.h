@@ -11,6 +11,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <stdarg.h>
 #else
 # if !HAVE_MEMCPY
 #  define memcpy(d, s, n) bcopy ((s), (d), (n))
@@ -41,6 +42,7 @@
 #define NULLMPI_PROCESSOR_NAME "supercomputer"
 
 extern int nullmpi_print(const char *string);
+extern int nullmpi_printf(const char *fmt, ...);
 extern int nullmpi_checkinit_print(const char *string);
 #define nullmpi_stats(func) nullmpi_checkinit_print(func)
 #define nullmpi_assert(EXPR) assert(EXPR)
@@ -48,6 +50,7 @@ extern int nullmpi_checkinit_print(const char *string);
 extern void nullmpi_initialize(void);
 extern int nullmpi_initialized(void);
 extern void nullmpi_finalize(void);
+extern int nullmpi_finalized(void);
 extern void nullmpi_abort(int);
 extern int nullmpi_unsupported(void);
 extern int nullmpi_set_errhandler(MPI_Comm, MPI_Errhandler *);

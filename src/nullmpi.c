@@ -40,8 +40,7 @@ static MPI_Errhandler nullmpi_errhandler = MPI_ERRORS_RETURN;
 
 static int nullmpi_handle_error(const char *s)
 {
-  nullmpi_print("an error occured");
-  nullmpi_print(s);
+  nullmpi_printf("an error occured: %s", s ? s : "");
   switch (nullmpi_errhandler) {
   case MPI_ERRORS_ARE_FATAL:
     nullmpi_abort(127);
@@ -65,9 +64,22 @@ int nullmpi_set_errhandler(MPI_Comm comm, MPI_Errhandler *errhandler)
   }
 }
 
+int nullmpi_printf(const char *fmt, ...)
+{
+  va_list ap;
+
+  fputs("nullmpi: ", stderr);
+  va_start(ap, fmt);
+  vfprintf(stderr, fmt, ap);
+  va_end(ap);
+  return fputc('\n', stderr);
+}
+
 int nullmpi_print(const char *string)
 {
-  return fprintf (stderr, "nullmpi: %s.\n", string);
+  fputs("nullmpi: ", stderr);
+  fputs(string, stderr);
+  return fputc('\n', stderr);
 }
 
 int nullmpi_checkinit_print(const char *string)
