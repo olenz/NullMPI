@@ -8,7 +8,7 @@ AC_TRY_COMPILE(,
 [int main() {
 char *s = __func__;
 }],
-AC_DEFINE(HAVE_FUNC,,
+AC_DEFINE([HAVE_FUNC],1,
 [Define if the C compiler supports __func__]) ac_cv_c_var_func=yes,
 ac_cv_c_var_func=no) )
 ])dnl
