@@ -5,13 +5,23 @@ include_HEADERS = $(PUBLICHEADERS)
 lib_LIBRARIES = libnullmpi.a
 libnullmpi_a_SOURCES = $(PUBLICHEADERS) $(PRIVATEHEADERS) $(PRIVATESOURCES)
 
-TESTS = t
-check_PROGRAMS = t
-t_LDADD = libnullmpi.a
+PUBLICHEADERS = \
+	mpi.h \
+	mpi_types.h \
+	mpi2.h \
+	nullmpi_conf.h
 
-PUBLICHEADERS = mpi.h mpi_types.h mpi2.h nullmpi_conf.h
-PRIVATEHEADERS = nullmpi.h
-PRIVATESOURCES = \
+PRIVATEHEADERS = \
+	nullmpi.h \
+	ptp.h
+
+PRIVATESOURCES = $(PRIVATEAPISOURCES) $(PRIVATEINTERNALSOURCES)
+
+PRIVATEINTERNALSOURCES = \
+	nullmpi.c \
+	ptp.c
+
+PRIVATEAPISOURCES = \
 	mpi_abort.c \
 	mpi_address.c \
 	mpi_allgather.c \
@@ -85,5 +95,7 @@ PRIVATESOURCES = \
 	mpi_waitall.c \
 	mpi_waitany.c \
 	mpi_waitsome.c \
-	nullmpi.c \
 	wtime.c
+
+#nullmpi_conf.h: config.h
+#	cd $(top_builddir) && ./config.status src/config.h src/nullmpi_conf.h

@@ -73,7 +73,7 @@ AH_BOTTOM([#if defined(_NULLMPI_HAVE_ATTRIBUTE) || defined(HAVE_ATTRIBUTE)
 #endif
 /*@=namechecks@*/])
 
-AC_CONFIG_FILES([Makefile src/Makefile
+AC_CONFIG_FILES([Makefile src/Makefile pmpi/Makefile tests/Makefile
 		 man/mpicc.1 man/mpiCC.1 man/mpiexec.1])
 AC_CONFIG_FILES([bin/mpicc bin/mpiCC bin/mpiexec], [chmod u+x bin/mpi*])
 AC_OUTPUT
