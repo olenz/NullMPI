@@ -64,8 +64,10 @@ int test_nonblock(void)
     abort();
   if (MPI_Irecv(recv, BUF, MPI_CHAR, 0, 666, MPI_COMM_WORLD, &rreq) != MPI_SUCCESS)
     abort();
-  if (recv[0] == 1)		/* THIS IS UNPORTABLE! */
+#if 0		/* THIS IS UNPORTABLE! */  /* AND WRONG IN OUR IMPLEMENTATION */
+  if (recv[0] == 1)
     abort();
+#endif
   if (MPI_Wait(&sreq, &sstat) != MPI_SUCCESS)
     abort();
   if (MPI_Wait(&rreq, &rstat) != MPI_SUCCESS)

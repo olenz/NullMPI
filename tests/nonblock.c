@@ -42,7 +42,7 @@ int test_nonblock(void)
       abort();
     if (MPI_Wait(&rreq[i], &rstat) != MPI_SUCCESS)
       abort();
-#if 0
+#if 1
     if (r[i][0] != (char) (N * i + 1))
       abort();
 #endif

@@ -11,7 +11,7 @@ typedef struct ptplist ptplist;
 nullmpi_append_ptp(ptplist *list, /*@null@*/ /*@only@*/ ptplist *r);
 
 ptplist *
-nullmpi_remove_ptp(ptplist *r);
+nullmpi_dequeue_ptp(ptplist *r);
 
 /*@null@*/ /*@dependent@*/ ptplist *
 nullmpi_find_ptp(ptplist *list, const ptplist *request);

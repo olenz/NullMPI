@@ -31,7 +31,7 @@ nullmpi_append_ptp(ptplist *list, /*@null@*/ /*@only@*/ ptplist *r)
 }
 
 ptplist *
-nullmpi_remove_ptp(ptplist *r)
+nullmpi_dequeue_ptp(ptplist *r)
 {
   nullmpi_assert(r != NULL);
   nullmpi_assert(r->next != NULL);
@@ -58,9 +58,11 @@ request_match(const ptplist *r1, const ptplist *r2)
 nullmpi_find_ptp(ptplist *list, const ptplist *request)
 {
   ptplist *l;
-  for (l = list->next; l != list; l = l->next)
+  for (l = list->next; l != list; l = l->next) {
+    nullmpi_assert(!l->done);
     if (request_match(l, request))
       break;
+  }
   return l == list ? NULL : l;
 }
 
@@ -106,16 +108,27 @@ nullmpi_new_ptp(void *buf, size_t size, int tag, int comm, int issend)
 /*@null@*/ /*@dependent@*/ ptplist *
 nullmpi_queue_ptp(void *buf, size_t size, int tag, int comm, int issend)
 {
+  ptplist *other;
   ptplist *r = nullmpi_new_ptp(buf, size, tag, comm, issend);
   switch (issend) {
   case ISSEND:
-    return nullmpi_append_ptp(sendlist, r);
+    if ((other = nullmpi_find_ptp(recvlist, r))) {
+      if (!nullmpi_process_ptp(r, other))
+	nullmpi_dequeue_ptp(other);
+     } else
+      r = nullmpi_append_ptp(sendlist, r);
+    break;
   case ISRECV:
-    return nullmpi_append_ptp(recvlist, r);
+    if ((other = nullmpi_find_ptp(sendlist, r))) {
+      if (!nullmpi_process_ptp(other, r))
+	nullmpi_dequeue_ptp(other);
+    } else
+      r = nullmpi_append_ptp(recvlist, r);
+    break;
   default:
-    /*NOTREACHED*/
-    return NULL;
+    /*NOTREACHED*/ ;
   }
+  return r;
 }
 
 void nullmpi_delete_ptp(/*@null@*/ /*@out@*/ /*@only@*/ ptplist *r)
@@ -138,15 +151,19 @@ nullmpi_blockptp(void *buf, int count, MPI_Datatype type, int tag,
   nullmpi_ptp(&r, buf, nullmpi_sizeof_datatype (type) * count, tag, comm, issend);
   switch (issend) {
   case ISSEND:
-    if ((other = nullmpi_find_ptp(recvlist, &r)))
+    if ((other = nullmpi_find_ptp(recvlist, &r))) {
       err = nullmpi_process_ptp(&r, other);
-    else
+      if (!err)
+	nullmpi_dequeue_ptp(other);
+    } else
       nullmpi_deadlock();
     break;
   case ISRECV:
-    if ((other = nullmpi_find_ptp(sendlist, &r)))
+    if ((other = nullmpi_find_ptp(sendlist, &r))) {
       err = nullmpi_process_ptp(other, &r);
-    else
+      if (!err)
+	nullmpi_dequeue_ptp(other);
+    } else
       nullmpi_deadlock();
   }
   return err;
@@ -171,12 +188,16 @@ nullmpi_waithandle(int count, MPI_Request *requests, int *completed, MPI_Status 
       if ((other = nullmpi_find_ptp(recvlist, r))) {
 	nullmpi_assert(!other->done);
 	err = nullmpi_process_ptp(r, other);
+	if (!err)
+	  nullmpi_dequeue_ptp(r);
       }
       break;
     case ISRECV:
       if ((other = nullmpi_find_ptp(sendlist, r))) {
 	nullmpi_assert(!other->done);
 	err = nullmpi_process_ptp(other, r);
+	if (!err)
+	  nullmpi_dequeue_ptp(r);
       }
     }
   }
@@ -184,8 +205,9 @@ nullmpi_waithandle(int count, MPI_Request *requests, int *completed, MPI_Status 
   status->MPI_TAG = r->tag;
   status->MPI_ERROR = err;
   status->size = r->size;
-  nullmpi_remove_ptp(r);
-  nullmpi_delete_ptp(r);
-  *request = MPI_REQUEST_NULL;
+  if (r->done && !err) {
+    nullmpi_delete_ptp(r);
+    *request = MPI_REQUEST_NULL;
+  }
   return err;
 }
