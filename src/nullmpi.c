@@ -115,7 +115,20 @@ int nullmpi_unsupported(void)
   return -1;
 }
 
+void /*@exits@*/ nullmpi_deadlock(void)
+{
+  nullmpi_print("deadlock found");
+  nullmpi_abort(127);
+}
+
 /*@access MPI_Datatype@*/
+
+struct floatint		{ float x; int d;};
+struct doubleint	{ double x; int d;};
+struct longint		{ long l; int d;};
+struct shortint		{ short s; int d;};
+struct twoint		{ int d1, d2;};
+struct longdblint	{ long double lx; int x;};
 
 size_t nullmpi_sizeof_datatype (MPI_Datatype type)
 {
@@ -140,12 +153,12 @@ size_t nullmpi_sizeof_datatype (MPI_Datatype type)
     0,			/* MPI_LB, */
     0,			/* MPI_UB, */
     /* */
-    sizeof(struct { float x; int d;}),		/* MPI_FLOAT_INT, */
-    sizeof(struct { double x; int d;}),		/* MPI_DOUBLE_INT, */
-    sizeof(struct { long l; int d;}),		/* MPI_LONG_INT, */
-    sizeof(struct { short s; int d;}),		/* MPI_SHORT_INT, */
-    sizeof(struct { int d1, d2;}),		/* MPI_2INT, */
-    sizeof(struct { long double lx; int x;}),	/* MPI_LONG_DOUBLE_INT, */
+    sizeof(struct floatint),	/* MPI_FLOAT_INT, */
+    sizeof(struct doubleint),	/* MPI_DOUBLE_INT, */
+    sizeof(struct longint),	/* MPI_LONG_INT, */
+    sizeof(struct shortint),	/* MPI_SHORT_INT, */
+    sizeof(struct twoint),	/* MPI_2INT, */
+    sizeof(struct longdblint),	/* MPI_LONG_DOUBLE_INT, */
     /* */
     0,			/* MPI_COMPLEX, */
     0,			/* MPI_DOUBLE_COMPLEX, */

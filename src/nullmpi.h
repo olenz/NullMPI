@@ -32,6 +32,16 @@
 # include <assert.h> /* for __ASSERT_FUNCTION */
 #endif
 
+#ifdef PROFILELIB
+# ifdef __STDC__
+#  define _P(func) P##func
+# else
+#  define _P(func) P/**/func
+# endif
+#else
+# define _P(func) func
+#endif
+
 #include "mpi.h"
 
 #ifndef FALSE
@@ -76,3 +86,5 @@ extern int nullmpi_set_errhandler(MPI_Comm, MPI_Errhandler *);
 
 extern size_t nullmpi_sizeof_datatype (MPI_Datatype type)
   __nullmpi_attribute__((__const__));
+
+extern void /*@exits@*/ nullmpi_deadlock(void);
