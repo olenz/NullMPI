@@ -1,0 +1,24 @@
+.TH mpicc 1 "@VERSION@" "@PACKAGE@" "MPI Commands" \" -*- nroff -*-
+.SH NAME
+mpicc \- compile and link MPI programs written in C 
+.SH SYNOPSIS
+.B mpicc
+[\fB\-hv\fR] [\fB\-cc=\fICC\fR] [compile options]
+.SH DESCRIPTION
+This command can be used to compile and link MPI programs written in
+C.  It provides the options and any special libraries that are
+needed to compile and link MPI programs.
+.SH OPTIONS
+.TP
+.B -h
+give short help
+.TP
+.B -v
+print version.
+.TP
+.B -cc=\fICC\fR
+set C compiler (default: configured compiler).
+
+.SH SEE ALSO
+.BR mpiCC (1),
+.BR mpiexec (1) .

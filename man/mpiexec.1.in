@@ -1,0 +1,25 @@
+.TH mpiexec 1 "@VERSION@" "@PACKAGE@" "MPI Commands" \" -*- nroff -*-
+.SH NAME
+mpiexec, mpirun \- run MPI programs
+.SH SYNOPSIS
+.B mpiexec
+[\fB\-hv\fR] [\fB\-n=\fIP\fR] program [\fIargs\fI]...
+.br
+.B mpirun
+[\fB\-hv\fR] [\fB\-n=\fIP\fR|\fB\-np=\fIP\fR] program [\fIargs\fI]...
+.SH DESCRIPTION
+This command can be used to execute MPI programs.
+.SH OPTIONS
+.TP
+.B -h
+give short help
+.TP
+.B -v
+print version.
+.TP
+.B -n=\fIP\fR
+start \fIP\fR processes.  The only supported value for \fIP\fR is 1.
+
+.SH SEE ALSO
+.BR mpicc (1),
+.BR mpiCC (1) .
