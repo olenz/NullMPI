@@ -1,4 +1,4 @@
-nullmpi-0.6:
+nullmpi-0.6 released.
 - MPI_Pcontrol for debug output available.
 - some nonblocking functions added.
 - splint annotations improved.
