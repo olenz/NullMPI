@@ -1,7 +1,9 @@
 The usual GNU installation instructions apply.
-  configure [OPTIONS]
+  /path/to/configure [OPTIONS]
   make
   make install
+
+Configurations with source directory != build directory are supported.
 
 Adding `-Wno-unused' to CFLAGS is recommended for gcc
 (and similar flags for other compilers).
