@@ -11,9 +11,12 @@ tarname=@PACKAGE_TARNAME@
 rel=@VERSION@
 tagname=`echo $name-$rel | tr .- __`
 
+# no X forwarding via ssh
+unset DISPLAY
+
 # get a clean tree.
 tdir=`mktemp -d /tmp/inst-$name.XXXXXX`
-trap "echo please \"rm -rf $tdir\"" 0 1 2 3 13 15
+trap "echo please \"chmod -R u+w $tdir && rm -rf $tdir\"" 0 1 2 3 13 15
 cd $tdir
 cvs -d :ext:$USER@adamantium:/home/wildenhu/cvsroot co $name
 cd $name
@@ -42,7 +45,7 @@ scp $tarname-$rel.tar.gz wildenhu@adamantium:$name/
 
 # local install.
 find .. -perm +u+r | xargs chmod a+r
-find .. -type +u+x | xargs chmod a+rx
+find .. -perm +u+x | xargs chmod a+rx
 su swadmin -c "umask 0022 && \
  make install && \
  cd /opt/packages && \
