@@ -1,3 +1,6 @@
+/* $Id$ */
+/* Point-to-point communication routines */
+
 #include "nullmpi.h"
 #include "ptp.h"
 
