@@ -285,7 +285,7 @@ typedef struct
 typedef struct
 {
   int dummy;
-} MPI_Request;
+} *MPI_Request;
 
 typedef void (MPI_User_function)(void *, void *, int *, MPI_Datatype *);
 #if _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
