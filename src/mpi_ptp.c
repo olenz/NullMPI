@@ -113,14 +113,14 @@ int MPI_Request_free(MPI_Request *request)
 }
 
 int MPI_Waitany(int count, MPI_Request array_of_requests[],
-                int *index, MPI_Status *status)
+                int *indx, MPI_Status *status)
 {
   NULLMPI_STATS;
   return nullmpi_unsupported();
 }
 
 int MPI_Testany(int count, MPI_Request array_of_requests[],
-    int *index, int *flag, MPI_Status *status)
+    int *indx, int *flag, MPI_Status *status)
 {
   NULLMPI_STATS;
   return nullmpi_unsupported();

@@ -116,13 +116,13 @@ extern int MPI_Request_free(MPI_Request *request)
     /*@modifies request@*/ ;
 
 extern int MPI_Waitany(int count, MPI_Request array_of_requests[],
-    /*@out@*/ int *index, /*@out@*/ MPI_Status *status)
-    /*@modifies index, status@*/
+    /*@out@*/ int *indx, /*@out@*/ MPI_Status *status)
+    /*@modifies indx, status@*/
     /*@requires maxRead(array_of_requests) >= (count-1)@*/ ;
 
 extern int MPI_Testany(int count, MPI_Request array_of_requests[],
-    /*@out@*/ int *index, /*@out@*/ int *flag, /*@out@*/ MPI_Status *status)
-    /*@modifies index, flag, status@*/
+    /*@out@*/ int *indx, /*@out@*/ int *flag, /*@out@*/ MPI_Status *status)
+    /*@modifies indx, flag, status@*/
     /*@requires maxRead(array_of_requests) >= (count-1)@*/ ;
 
 extern int MPI_Waitall(int count, MPI_Request array_of_requests[],
@@ -479,20 +479,20 @@ extern int MPI_Dims_create(int nnodes, int ndims, /*@out@*/ int dims[])
     /*@requires maxSet(dims) >= (ndims-1)@*/ ;
 
 extern int MPI_Graph_create(MPI_Comm comm_old, int nnodes,
-    int index[], int edges[], int reorder, /*@out@*/ MPI_Comm *comm_graph)
+    int indx[], int edges[], int reorder, /*@out@*/ MPI_Comm *comm_graph)
     /*@modifies comm_graph@*/
-    /*@requires maxRead(index) >= (nnodes-1)@*/ ;
+    /*@requires maxRead(indx) >= (nnodes-1)@*/ ;
 
 extern int MPI_Graphdims_get(MPI_Comm comm,
     /*@out@*/ int *nnodes, /*@out@*/ int *nedges)
     /*@modifies nnodes, nedges@*/ ;
 
-extern int MPI_Graph_get(MPI_Comm comm, int maxindex, int maxedges,
-    /*@out@*/ int index[], /*@out@*/ int edges[])
-    /*@modifies index, edges@*/
-    /*@requires maxSet(index) >= (maxindex-1)
+extern int MPI_Graph_get(MPI_Comm comm, int maxindx, int maxedges,
+    /*@out@*/ int indx[], /*@out@*/ int edges[])
+    /*@modifies indx, edges@*/
+    /*@requires maxSet(indx) >= (maxindx-1)
              /\ maxSet(edges) >= (maxedges-1)@*/
-    /*@ensures maxRead(index) == (maxindex-1)
+    /*@ensures maxRead(indx) == (maxindx-1)
             /\ maxRead(edges) == (maxedges-1)@*/ ;
 
 extern int MPI_Cartdim_get(MPI_Comm comm, /*@out@*/ int *ndims)
@@ -539,9 +539,9 @@ extern int MPI_Cart_map(MPI_Comm comm_old, int ndims, int dims[], int periods[],
              /\ maxRead(periods) >= (ndims-1)@*/ ;
 
 extern int MPI_Graph_map(MPI_Comm comm_old, int nnodes,
-    int index[], int edges[], /*@out@*/ int *newrank)
+    int indx[], int edges[], /*@out@*/ int *newrank)
     /*@modifies newrank@*/
-    /*@requires maxRead(index) >= (nnodes-1)@*/ ;
+    /*@requires maxRead(indx) >= (nnodes-1)@*/ ;
 
 extern int MPI_Get_processor_name(/*@out@*/ char *name, /*@out@*/ int *resultlen)
     /*@modifies name, resultlen@*/

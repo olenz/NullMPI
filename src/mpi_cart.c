@@ -13,12 +13,12 @@ int MPI_Cart_create(MPI_Comm comm_old, int ndims,
 int MPI_Dims_create(int nnodes, int ndims, int dims[]);
 
 int MPI_Graph_create(MPI_Comm comm_old, int nnodes,
-    int index[], int edges[], int reorder, MPI_Comm *comm_graph);
+    int indx[], int edges[], int reorder, MPI_Comm *comm_graph);
 
 int MPI_Graphdims_get(MPI_Comm comm, int *nnodes, int *nedges);
 
-int MPI_Graph_get(MPI_Comm comm, int maxindex, int maxedges,
-                  int index[], int edges[]);
+int MPI_Graph_get(MPI_Comm comm, int maxindx, int maxedges,
+                  int indx[], int edges[]);
 
 int MPI_Cartdim_get(MPI_Comm comm, int *ndims)
 {
@@ -61,4 +61,4 @@ int MPI_Cart_map(MPI_Comm comm_old, int ndims, int dims[], int periods[],
                  int *newrank);
 
 int MPI_Graph_map(MPI_Comm comm_old, int nnodes,
-                  int index[], int edges[], int *newrank);
+                  int indx[], int edges[], int *newrank);
