@@ -133,25 +133,25 @@ struct longdblint	{ long double lx; int x;};
 size_t nullmpi_sizeof_datatype (MPI_Datatype type)
 {
   static const size_t nullmpi_datatype_sizes[NULLMPI_MAX_DATATYPE] = {
-    0,			/* MPI_DATATYPE_NULL, */
-    1,			/* MPI_CHAR, */
-    1,			/* MPI_UNSIGNED_CHAR, */
-    1,			/* MPI_BYTE, */
-    SIZEOF_SHORT,	/* MPI_SHORT, */
-    SIZEOF_SHORT,	/* MPI_UNSIGNED_SHORT, */
-    SIZEOF_INT,		/* MPI_INT, */
-    SIZEOF_INT,		/* MPI_UNSIGNED, */
-    SIZEOF_LONG,	/* MPI_LONG, */
-    SIZEOF_LONG,	/* MPI_UNSIGNED_LONG, */
-    SIZEOF_FLOAT,	/* MPI_FLOAT, */
-    SIZEOF_DOUBLE,	/* MPI_DOUBLE, */
-    SIZEOF_LONG_DOUBLE,	/* MPI_LONG_DOUBLE, */
-    SIZEOF_LONG_LONG,	/* MPI_LONG_LONG_INT, */
+    0,				/* MPI_DATATYPE_NULL, */
+    1,				/* MPI_CHAR, */
+    1,				/* MPI_UNSIGNED_CHAR, */
+    1,				/* MPI_BYTE, */
+    sizeof(short),		/* MPI_SHORT, */
+    sizeof(unsigned short),	/* MPI_UNSIGNED_SHORT, */
+    sizeof(int),		/* MPI_INT, */
+    sizeof(unsigned int),	/* MPI_UNSIGNED, */
+    sizeof(long),		/* MPI_LONG, */
+    sizeof(unsigned long),	/* MPI_UNSIGNED_LONG, */
+    sizeof(float),		/* MPI_FLOAT, */
+    sizeof(double),		/* MPI_DOUBLE, */
+    SIZEOF_LONG_DOUBLE,		/* MPI_LONG_DOUBLE, */
+    SIZEOF_LONG_LONG,		/* MPI_LONG_LONG_INT, */
     /* */
-    0,			/* MPI_PACKED, */
+    0,				/* MPI_PACKED, */
     /* */
-    0,			/* MPI_LB, */
-    0,			/* MPI_UB, */
+    0,				/* MPI_LB, */
+    0,				/* MPI_UB, */
     /* */
     sizeof(struct floatint),	/* MPI_FLOAT_INT, */
     sizeof(struct doubleint),	/* MPI_DOUBLE_INT, */
@@ -160,18 +160,18 @@ size_t nullmpi_sizeof_datatype (MPI_Datatype type)
     sizeof(struct twoint),	/* MPI_2INT, */
     sizeof(struct longdblint),	/* MPI_LONG_DOUBLE_INT, */
     /* */
-    0,			/* MPI_COMPLEX, */
-    0,			/* MPI_DOUBLE_COMPLEX, */
-    0,			/* MPI_LOGICAL, */
-    0,			/* MPI_REAL, */
-    0,			/* MPI_DOUBLE_PRECISION, */
-    0,			/* MPI_INTEGER, */
-    0,			/* MPI_2INTEGER, */
-    0,			/* MPI_2COMPLEX, */
-    0,			/* MPI_2DOUBLE_COMPLEX, */
-    0,			/* MPI_2REAL, */
-    0,			/* MPI_2DOUBLE_PRECISION, */
-    0			/* MPI_CHARACTER */
+    0,				/* MPI_COMPLEX, */
+    0,				/* MPI_DOUBLE_COMPLEX, */
+    0,				/* MPI_LOGICAL, */
+    0,				/* MPI_REAL, */
+    0,				/* MPI_DOUBLE_PRECISION, */
+    0,				/* MPI_INTEGER, */
+    0,				/* MPI_2INTEGER, */
+    0,				/* MPI_2COMPLEX, */
+    0,				/* MPI_2DOUBLE_COMPLEX, */
+    0,				/* MPI_2REAL, */
+    0,				/* MPI_2DOUBLE_PRECISION, */
+    0				/* MPI_CHARACTER */
   };
 
   if ((int)type >= 0 &&

@@ -26,11 +26,6 @@ AC_CHECK_HEADERS([assert.h sys/resource.h unistd.h])
 
 # Checks for types.
 AC_CHECK_TYPES([long long int])
-AC_CHECK_SIZEOF(short)
-AC_CHECK_SIZEOF(int)
-AC_CHECK_SIZEOF(long)
-AC_CHECK_SIZEOF(float)
-AC_CHECK_SIZEOF(double)
 AC_CHECK_SIZEOF(long double)
 AC_CHECK_SIZEOF(long long)
 
