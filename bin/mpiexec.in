@@ -1,6 +1,5 @@
 #! /bin/sh
-#mpiexec -n <numprocs> <program> 
-#set -x
+usage="echo $0 [ -n <procs> | -np <procs> ] <program>"
 
 eat=no
 for arg
@@ -15,12 +14,16 @@ do
 		;;
 	esac
 	case $arg in
+		-h|--help)
+		$usage
+		exit 0
+		;;
 		-n|-np)
 		n="$1"
 		shift
 		if test 1 != "$n"
 		then
-			echo >&2 "more than one process not supported"
+			echo >&2 "$0: more than one process is unsupported."
 			exit 1
 		fi
 		eat=yes

@@ -1,24 +1,34 @@
 #! /bin/sh
 
+usage="echo $0 [ -CC=<C++-compiler> ] [ compile and/or link options ]"
 prefix=@prefix@
 exec_prefix=@exec_prefix@
-MPICXX="${CXX-@CXX@}"
+MPICXX=@CXX@
 MPICPPFLAGS="-I@includedir@"
 MPILDFLAGS="-L@libdir@ -lnullmpi"
 
 DoLink=1
 DoCompile=0
-
 for arg
 do
+	shift
 	case $arg in
+		-h|--help)
+		$usage
+		exit 0
+		;;
 		-c|-E|-M|-MM)
 		DoLink=0
 		;;
 		*.c|*.C|*.cxx|*.cpp|*.cc|*.CC|*.s)
 		DoCompile=1
 		;;
+		-CC=*)
+		MPICXX=`echo x$arg | sed 's/x-CC=//'`
+		continue
+		;;
 	esac
+	set -- ${1+"$@"} "$arg"
 done
 case $DoLink in
 	0)

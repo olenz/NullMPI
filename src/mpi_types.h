@@ -184,7 +184,7 @@ typedef int (MPI_Delete_function)(MPI_Comm, int, void *, void *);
 /* now the real declarations used by nullmpi */
 
 /* typedefs */
-typedef enum MPI_Datatype
+typedef enum
 {
   MPI_DATATYPE_NULL,
   MPI_CHAR,
@@ -228,20 +228,20 @@ typedef enum MPI_Datatype
 } MPI_Datatype;
 
 /* Communicators */
-typedef enum MPI_Comm
+typedef enum
 {
   MPI_COMM_NULL,
   MPI_COMM_WORLD,
   MPI_COMM_SELF
 } MPI_Comm;
 
-typedef enum MPI_Group
+typedef enum
 {
   MPI_GROUP_NULL,
   MPI_GROUP_EMPTY
 } *MPI_Group;
 
-typedef enum MPI_Op
+typedef enum
 {
   MPI_OP_NULL,
   MPI_MAX,
@@ -261,7 +261,7 @@ typedef enum MPI_Op
 typedef void *MPI_Aint;
 typedef int MPI_Errhandler;
 
-typedef struct MPI_Status
+typedef struct
 {
   int MPI_SOURCE;
   int MPI_TAG;
@@ -270,7 +270,7 @@ typedef struct MPI_Status
   int private_count;
 } MPI_Status;
 
-typedef struct MPI_Request
+typedef struct
 {
   int dummy;
 } *MPI_Request;
@@ -307,9 +307,9 @@ typedef int (MPI_Delete_function)(MPI_Comm, int, void *, void *);
 #define MPI_WTIME_IS_GLOBAL	7
 
 /* pre-defined constants */
-#define MPI_UNDEFINED		8
-#define MPI_UNDEFINED_RANK	9
-#define MPI_KEYVAL_INVALID	10
+#define MPI_UNDEFINED		-8
+#define MPI_UNDEFINED_RANK	-9
+#define MPI_KEYVAL_INVALID	-10
 
 /* topology types */
 #define MPI_GRAPH		11

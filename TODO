@@ -1,0 +1,16 @@
+Many functions are not implemented at all.
+
+Point-to-point communication does not work at all except MPI_Sendrecv.
+
+User-defined datatypes do not work.
+
+User-defined MPI_Op's do not work.
+
+MPI_Errhandler do not work.
+
+MPI_Cart* do not do the right thing.
+
+
+
+make MPI_Wtime portable *and* exact.
+test __func__ and __FUNC__ before using.

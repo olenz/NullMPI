@@ -23,9 +23,7 @@
 /* Timing */
 double MPI_Wtime (void)
 {
-#if defined __ASSERT_FUNCTION && __PRINT_ASSERT_FUNCTION
-  fprintf (stderr,"SingleProcessorMPI '%s'.\n",__ASSERT_FUNCTION);
-#endif
+  NULLMPI_STATS;
 #ifdef __RUSAGE_TIME__
   struct rusage rut;
   double ut, st, wt;

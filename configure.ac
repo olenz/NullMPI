@@ -6,7 +6,7 @@ AC_INIT([nullmpi], [0.01], [wildenhues@ins.uni-bonn.de])
 AC_CONFIG_SRCDIR([src/mpi.c])
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_HEADERS([src/config.h])
-AM_INIT_AUTOMAKE([foreign -Wall])
+AM_INIT_AUTOMAKE([1.7 foreign -Wall])
 
 # Checks for programs.
 AC_PROG_CC
@@ -46,6 +46,9 @@ AC_CHECK_MEMBER([struct rusage.ru_utime.tv_sec],,,
 
 
 # Checks for compiler characteristics.
+AC_C_STRINGIZE
+AC_C_CONST
+AC_C_VAR_FUNC
 
 # Checks for library functions.
 AC_CHECK_FUNCS([memcpy])
@@ -53,5 +56,5 @@ AC_CHECK_FUNCS([memcpy])
 # Checks for system services
 
 AC_CONFIG_FILES([Makefile src/Makefile])
-AC_CONFIG_FILES([bin/mpicc bin/mpiCC bin/mpiexec], [chmod u+x bin/mpi??])
+AC_CONFIG_FILES([bin/mpicc bin/mpiCC bin/mpiexec], [chmod u+x bin/mpi*])
 AC_OUTPUT

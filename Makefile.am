@@ -2,9 +2,10 @@
 
 SHELL	= /bin/sh
 @SET_MAKE@
+ACLOCAL_AMFLAGS = -I m4
 SUBDIRS	= src
 bin_SCRIPTS = bin/mpicc bin/mpiCC bin/mpiexec
-#EXTRA_DIST = 
+EXTRA_DIST = m4/ac_c_var_func.m4
 
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \

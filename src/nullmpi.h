@@ -18,6 +18,34 @@
 
 #include "mpi.h"
 
+#ifndef FALSE
+# define FALSE 0
+# define TRUE !FALSE
+#endif
+
 /* DEBUG */
 /* #define __PRINT_ASSERT_FUNCTION */
 
+#if HAVE_STRINGIZE
+# if defined __ASSERT_FUNCTION && __PRINT_ASSERT_FUNCTION
+#  define NULLMPI_STATS nullmpi_stats(__ASSERT_FUNCTION)
+# else
+#  if HAVE_FUNC
+#   define NULLMPI_STATS nullmpi_stats(__func__)
+#  else
+#   define NULLMPI_STATS
+#  endif
+# endif
+#else
+# define NULLMPI_STATS
+#endif
+
+#define NULLMPI_PROCESSOR_NAME "supercomputer"
+
+extern int nullmpi_print(const char *string);
+#define nullmpi_stats(func) nullmpi_print(func)
+#define nullmpi_assert(EXPR) assert(EXPR)
+
+extern void nullmpi_initialize(void);
+extern void nullmpi_finalize(void);
+extern void nullmpi_abort(int);
