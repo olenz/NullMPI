@@ -15,7 +15,7 @@ tdir=`mktemp -d /tmp/inst-$name.XXXXXX`
 trap "echo please \"rm -rf $tdir\"" 0 1 2 3 13 15
 cd $tdir
 cvs -d :ext:$USER@adamantium:/home/wildenhu/cvsroot co $name
-cd $package
+cd $name
 
 # make sure to have a CVS entry for the release, preferably in the NEWS file.
 sed -n 1p NEWS | grep "$rel" >/dev/null
@@ -37,15 +37,20 @@ scp $tarname-$rel.tar.gz wildenhu@adamantium:$name/
 #scp $tarname-$rel.tar.gz wissadm@hermes:download/$name/
 
 # local install.
-find . | xargs chmod a+r
-find .. -type d | xargs chmod a+rx
-su swadmin -c "make install && \
+find .. -perm +u+r | xargs chmod a+r
+find .. -type +u+x | xargs chmod a+rx
+su swadmin -c "umask 0022 && \
+ make install && \
  cd /opt/packages && \
- rm -f $tarname && \
- ln -s $tarname-$rel $tarname && \
- scp -r -p $tarname-$rel adamantium:/opt/packages"
-ssh -l swadmin adamantium "cd /opt/packages && \
- rm -f $tarname && \
- ln -s $tarname-$rel $tarname"
+ rm -f $name && \
+ ln -s $name-$rel $name && \
+ scp -r -p $name-$rel adamantium:/opt/packages"
+ssh -l swadmin adamantium "umask 0022 && \
+ cd /opt/packages && \
+ rm -f $name && \
+ ln -s $name-$rel $name"
 
 # write announcements...
+
+# make backup of CVS tree (do this before the other stuff!)
+#f=/backup/wildenhu/backup/cvs-repository-`date -I`.tar.bz2; ssh adamantium 'cd /home/wildenhu/cvsroot && tar cvjf - .' >$f && chmod u=rw,g-rw $f
