@@ -165,8 +165,13 @@ nullmpi_blockptp(void *buf, int count, MPI_Datatype type, int tag,
   case ISRECV:
     if ((other = nullmpi_find_ptp(sendlist, &r))) {
       err = nullmpi_process_ptp(other, &r);
-      if (!err)
+      if (!err) {
 	nullmpi_dequeue_ptp(other);
+	status->MPI_SOURCE = 0;
+	status->MPI_TAG = r.tag;
+	status->MPI_ERROR = err;
+	status->size = r.size;
+      }
     } else
       nullmpi_deadlock();
   }
@@ -174,44 +179,50 @@ nullmpi_blockptp(void *buf, int count, MPI_Datatype type, int tag,
 }
 
 int
-nullmpi_waithandle(int count, MPI_Request *requests, int *completed, MPI_Status *status)
+nullmpi_waithandle(int count, MPI_Request *requests, int *completed, MPI_Status *statuses)
 {
+  int i;
   int err = MPI_SUCCESS;
   ptplist *r;
   ptplist *other;
   MPI_Request *request;
+  MPI_Status  *status;
 
-  nullmpi_assert(count == 1);
-  request = requests;
-
-  nullmpi_assert(request && *request);
-  r = *request;
-  if (!r->done) {
-    switch (r->issend) {
-    case ISSEND:
-      if ((other = nullmpi_find_ptp(recvlist, r))) {
-	nullmpi_assert(!other->done);
-	err = nullmpi_process_ptp(r, other);
-	if (!err)
-	  nullmpi_dequeue_ptp(r);
-      }
-      break;
-    case ISRECV:
-      if ((other = nullmpi_find_ptp(sendlist, r))) {
-	nullmpi_assert(!other->done);
-	err = nullmpi_process_ptp(other, r);
-	if (!err)
-	  nullmpi_dequeue_ptp(r);
+  for (i=0; i<count; ++i) {
+    request = requests + i;
+    status  = statuses + i;
+    nullmpi_assert(request && *request);
+    nullmpi_assert(status != NULL);
+    r = *request;
+    if (!r->done) {
+      switch (r->issend) {
+      case ISSEND:
+	if ((other = nullmpi_find_ptp(recvlist, r))) {
+	  nullmpi_assert(!other->done);
+	  err = nullmpi_process_ptp(r, other);
+	  if (!err)
+	    nullmpi_dequeue_ptp(r);
+	}
+	break;
+      case ISRECV:
+	if ((other = nullmpi_find_ptp(sendlist, r))) {
+	  nullmpi_assert(!other->done);
+	  err = nullmpi_process_ptp(other, r);
+	  if (!err)
+	    nullmpi_dequeue_ptp(r);
+	}
       }
     }
-  }
-  status->MPI_SOURCE = 0;
-  status->MPI_TAG = r->tag;
-  status->MPI_ERROR = err;
-  status->size = r->size;
-  if (r->done && !err) {
-    nullmpi_delete_ptp(r);
-    *request = MPI_REQUEST_NULL;
+    status->MPI_SOURCE = 0;
+    status->MPI_TAG = r->tag;
+    status->MPI_ERROR = err;
+    status->size = r->size;
+    if (r->done && !err) {
+      nullmpi_delete_ptp(r);
+      *request = MPI_REQUEST_NULL;
+    }
+    if (err)
+      break;
   }
   return err;
 }

@@ -82,6 +82,7 @@ int test_nonblock(void)
     abort();
   if (recv[0] != 1)
     abort();
+  rstat.size = 0;
   if (MPI_Wait(&rreq, &rstat) != MPI_SUCCESS)
     abort();
   if (MPI_Get_count(&rstat, MPI_CHAR, &count) != MPI_SUCCESS)
@@ -92,8 +93,14 @@ int test_nonblock(void)
   recv[0] = 0;
   if (MPI_Isend(send, BUF, MPI_CHAR, 0, 669, MPI_COMM_WORLD, &sreq) != MPI_SUCCESS)
     abort();
+  rstat.size = 0;
   if (MPI_Recv(recv, BUF, MPI_CHAR, 0, 669, MPI_COMM_WORLD, &rstat) != MPI_SUCCESS)
     abort();
+  if (MPI_Get_count(&rstat, MPI_CHAR, &count) != MPI_SUCCESS)
+    abort();
+  if (count != BUF)
+    abort();
+  sstat.size = 0;
   if (MPI_Wait(&sreq, &sstat) != MPI_SUCCESS)
     abort();
   if (recv[0] != 1)
