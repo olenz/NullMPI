@@ -239,7 +239,7 @@ typedef enum
 {
   MPI_GROUP_NULL,
   MPI_GROUP_EMPTY
-} *MPI_Group;
+} MPI_Group;
 
 typedef enum
 {
@@ -273,7 +273,7 @@ typedef struct
 typedef struct
 {
   int dummy;
-} *MPI_Request;
+} MPI_Request;
 
 typedef void (MPI_User_function)(void *, void *, int *, MPI_Datatype *);
 #ifdef _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
