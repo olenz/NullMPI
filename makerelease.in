@@ -9,6 +9,7 @@ set -e -x
 name=@PACKAGE@
 tarname=@PACKAGE_TARNAME@
 rel=@VERSION@
+tagname=`echo $name-$rel | tr .- __`
 
 # get a clean tree.
 tdir=`mktemp -d /tmp/inst-$name.XXXXXX`
@@ -31,6 +32,9 @@ sed -n 3p ChangeLog | grep "$rel.*released" >/dev/null
 make
 make dist
 make distcheck
+
+# tag CVS
+cvs tag -R $tagname .
 
 # distribution.
 scp $tarname-$rel.tar.gz wildenhu@adamantium:$name/
