@@ -1,0 +1,18 @@
+nullmpi
+
+This is a trivial (and currently incomplete) MPI implementation
+for use as a uniprocessor replacement.  Use this to port your
+parallel code to machines without a MPI implementation or quick
+test-compiles.
+
+Nullmpi allows global communications, but does not implement
+point-to-point communications to self.  Timing is supported.
+Compilation options allow for debug and statistics output.
+
+Furthermore, the set of headers can be used with splint[1] for
+portability testing.
+
+For installation, please read the file INSTALL.
+Please direct feedback at wildenhues@ins.uni-bonn.de.
+
+[1] http://splint.org/

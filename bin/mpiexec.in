@@ -1,0 +1,39 @@
+#! /bin/sh
+#mpiexec -n <numprocs> <program> 
+#set -x
+
+eat=no
+for arg
+do
+	shift
+	case $eat in
+		yes)
+		eat=no
+		continue
+		;;
+		no)
+		;;
+	esac
+	case $arg in
+		-n|-np)
+		n="$1"
+		shift
+		if test 1 != "$n"
+		then
+			echo >&2 "more than one process not supported"
+			exit 1
+		fi
+		eat=yes
+		;;
+		-*)
+		echo >&2 "$0: option $arg not supported"
+		;;
+		*)
+		set -- ${1+"$@"} "$arg"
+		break
+		;;
+	esac
+done
+
+exec "$@"
+exit 1

@@ -1,0 +1,5 @@
+#! /bin/sh
+# Bootstrap from CVS source.
+# This file is not to be distributed.
+
+autoreconf -v -i

@@ -1,0 +1,33 @@
+#! /bin/sh
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+MPICXX="${CXX-@CXX@}"
+MPICPPFLAGS="-I@includedir@"
+MPILDFLAGS="-L@libdir@ -lnullmpi"
+
+DoLink=1
+DoCompile=0
+
+for arg
+do
+	case $arg in
+		-c|-E|-M|-MM)
+		DoLink=0
+		;;
+		*.c|*.C|*.cxx|*.cpp|*.cc|*.CC|*.s)
+		DoCompile=1
+		;;
+	esac
+done
+case $DoLink in
+	0)
+	MPILDFLAGS=
+	;;
+esac
+case $DoCompile in
+	0)
+	MPICPPFLAGS=
+esac
+
+$MPICXX $MPICPPFLAGS ${1+"$@"} $MPILDFLAGS
