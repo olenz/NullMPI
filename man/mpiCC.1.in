@@ -4,9 +4,12 @@ mpiCC \- compile and link MPI programs written in C++
 .SH SYNOPSIS
 .B mpiCC
 [\fB\-hv\fR] [\fB\-CC=\fICXX\fR] [compile options]
+.br
+.B mpicxx
+[\fB\-hv\fR] [\fB\-CC=\fICXX\fR] [compile options]
 .SH DESCRIPTION
-This command can be used to compile and link MPI programs written in
-C++.  It provides the options and any special libraries that are
+These commands can be used to compile and link MPI programs written in
+C++.  They provide the options and any special libraries that are
 needed to compile and link MPI programs.
 .SH OPTIONS
 .TP

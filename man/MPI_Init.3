@@ -1,0 +1,57 @@
+.TH MPI_Init 3 "@VERSION@" "@PACKAGE@" "MPI C API" \" -*- nroff -*-
+.SH NAME
+MPI_Init \- Initialize the MPI execution environment
+.SH SYNOPSIS
+.nf
+#include "mpi.h"
+int MPI_Init(int *argc, char ***argv)
+.fi
+.SH INPUT PARAMETERS
+.PD 0
+.TP
+.B argc
+- Pointer to the number of arguments
+.PD 1
+.PD 0
+.TP
+.B argv
+- Pointer to the argument vector
+.PD 1
+.SH ERRORS
+ 
+All MPI routines (except
+.I MPI_Wtime
+and
+.I MPI_Wtick
+) return an error value;
+C routines as the value of the function and Fortran routines in the last
+argument.  Before the value is returned, the current MPI error handler is
+called.  By default, this error handler aborts the MPI job.  The error handler
+may be changed with
+.I MPI_Errhandler_set
+; the predefined error handler
+.I MPI_ERRORS_RETURN
+may be used to cause error values to be returned.
+Note that MPI does
+.B not
+guarantee that an MPI program can continue past
+an error.
+ 
+.PD 0
+.TP
+.B MPI_SUCCESS
+- No error; MPI routine completed successfully.
+.PD 1
+.PD 0
+.TP
+.B MPI_ERR_OTHER
+- This error class is associated with an error code that
+indicates that an attempt was made to call
+.I MPI_INIT
+a second time.
+.I MPI_INIT
+may only be called once in a program.
+.PD 1
+.SH SIGNALS USED
+The MPI standard requires that all signals used be documented.
+The nullmpi implementation uses no signals.
