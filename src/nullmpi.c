@@ -16,12 +16,18 @@ void nullmpi_initialize(void)
 
 int nullmpi_initialized(void)
 {
-  return initialized == nullmpi_after_MPI_Init;	/* we want errors after finalize */
+  /* we want no error after finalize: cf. MPI-1.2 clarification */
+  return initialized != nullmpi_before_MPI_Init;
 }
 
 void nullmpi_finalize(void)
 {
   initialized = nullmpi_after_MPI_Finalize;
+}
+
+int nullmpi_finalized(void)
+{
+  return initialized == nullmpi_after_MPI_Finalize;
 }
 
 void nullmpi_abort(int error)
@@ -47,13 +53,13 @@ static int nullmpi_handle_error(const char *s)
   }
 }
 
-static int nullmpi_set_errhandler(MPI_Comm comm, MPI_Errhandler *errhandler)
+int nullmpi_set_errhandler(MPI_Comm comm, MPI_Errhandler *errhandler)
 {
   switch (nullmpi_errhandler) {
   case MPI_ERRORS_ARE_FATAL:
-    nullmpi_abort(127);
   case MPI_ERRORS_RETURN:
-    return -1;
+    nullmpi_errhandler = *errhandler;
+    return MPI_SUCCESS;
   default:
     return nullmpi_unsupported();
   }

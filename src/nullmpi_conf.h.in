@@ -1,0 +1,16 @@
+#ifndef __NULLMPI_INCLUDE_MPI_H__
+# error "never include this file directly, include mpi.h instead."
+#endif
+
+/*@-namechecks@*/
+
+/* define if you want to make use of MPI2 features */
+#undef _NULLMPI_USE_MPI2_FEATURES
+
+/* define if you want to make use of deprecated MPI1 features */
+#undef _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
+
+/* define if your compiler understands __attribute__ ((deprecated)) or alike */
+#undef _NULLMPI_ATTR_DEPRECATED
+
+/*@=namechecks@*/

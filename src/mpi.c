@@ -47,7 +47,7 @@ int MPI_Get_processor_name(char *name, int *resultlen)
   return MPI_SUCCESS;
 }
 
-#ifdef _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
+#if _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
 
 int MPI_Keyval_create(MPI_Copy_function *, MPI_Delete_function *,
     int *, void *);

@@ -2,7 +2,7 @@
 /* private data and portability header */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+# include <config.h>
 #else
 # error "compilation without config.h header not supported."
 #endif
@@ -50,3 +50,4 @@ extern int nullmpi_initialized(void);
 extern void nullmpi_finalize(void);
 extern void nullmpi_abort(int);
 extern int nullmpi_unsupported(void);
+extern int nullmpi_set_errhandler(MPI_Comm, MPI_Errhandler *);

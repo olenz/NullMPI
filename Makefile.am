@@ -5,7 +5,9 @@ SHELL	= /bin/sh
 ACLOCAL_AMFLAGS = -I m4
 SUBDIRS	= src
 bin_SCRIPTS = bin/mpicc bin/mpiCC bin/mpiexec
-EXTRA_DIST = bin/mpicc.in bin/mpiCC.in bin/mpiexec.in m4/ac_c_var_func.m4
+man1_MANS = man/mpicc.1 man/mpiCC.1 man/mpiexec.1 man/mpirun.1
+EXTRA_DIST = bin/mpicc.in bin/mpiCC.in bin/mpiexec.in m4/ac_c_var_func.m4 \
+	     man/mpirun.1
 
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \

@@ -13,35 +13,26 @@
  * Transcription by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
  */
 
-/*
- * In order to enable the bindings of MPI2 (not enabled by default),
- * #define _NULLMPI_USE_MPI2_FEATURES 1
- */
-/*
- * If you need the MPI1 functions which have been deprecated by later
- * standards versions (they are disabled by default),
- * #define _NULLMPI_USE_DEPRECATED_MPI1_FEATURES 1
- */
-
+/*@-namechecks@*/
 #ifndef __NULLMPI_INCLUDE_MPI_H__
 #define __NULLMPI_INCLUDE_MPI_H__
+/*@=namechecks@*/
+
+/* keep all configurable/system dependent defines in a separate file */
+#include <nullmpi_conf.h>
 
 /* Keep C++ compilers from getting confused */
 #if defined(__cplusplus)
 extern "C" {
 #endif
 
+#include <mpi_types.h>
+
 /* TODO: a lot to make it really splint-clean: */
 /*@-declundef@*/
-/*@-constuse@*/
 /*@-fcnuse@*/
-/*@-typeuse@*/
-/*@-exporttype@*/
-/*@-exportconst@*/
 /*@-exportfcn@*/
 /*@-protoparamname@*/
-
-#include "mpi_types.h"
 
 /* C bindings */
 extern int MPI_Send(void *buf, int count, MPI_Datatype datatype,
@@ -228,18 +219,25 @@ extern int MPI_Type_indexed(int count, int blocklens[], int indices[],
     /*@requires maxRead(blocklens) >= (count-1)
              /\ maxRead(indices) >= (count-1)@*/ ;
 
-#ifdef _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
+#if _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
 extern int MPI_Type_hindexed(int, int *, MPI_Aint *, MPI_Datatype,
-    /*@out@*/ MPI_Datatype *);
+    /*@out@*/ MPI_Datatype *)
+    _NULLMPI_ATTR_DEPRECATED;
 extern int MPI_Type_hvector(int, int, MPI_Aint, MPI_Datatype,
-    /*@out@*/ MPI_Datatype *);
+    /*@out@*/ MPI_Datatype *)
+    _NULLMPI_ATTR_DEPRECATED;
 extern int MPI_Type_struct(int, int *, MPI_Aint *, MPI_Datatype *,
-    /*@out@*/ MPI_Datatype *);
-extern int MPI_Address(void *, /*@out@*/ MPI_Aint *);
+    /*@out@*/ MPI_Datatype *)
+    _NULLMPI_ATTR_DEPRECATED;
+extern int MPI_Address(void *, /*@out@*/ MPI_Aint *)
+    _NULLMPI_ATTR_DEPRECATED;
 
-extern int MPI_Type_extent(MPI_Datatype, /*@out@*/ MPI_Aint *);
-extern int MPI_Type_lb(MPI_Datatype, /*@out@*/ MPI_Aint*);
-extern int MPI_Type_ub(MPI_Datatype, /*@out@*/ MPI_Aint*);
+extern int MPI_Type_extent(MPI_Datatype, /*@out@*/ MPI_Aint *)
+    _NULLMPI_ATTR_DEPRECATED;
+extern int MPI_Type_lb(MPI_Datatype, /*@out@*/ MPI_Aint*)
+    _NULLMPI_ATTR_DEPRECATED;
+extern int MPI_Type_ub(MPI_Datatype, /*@out@*/ MPI_Aint*)
+    _NULLMPI_ATTR_DEPRECATED;
 #endif /* _NULLMPI_USE_DEPRECATED_MPI1_FEATURES */
 
 /* see mpi-20.ps. It clarifies the declaration below as correct
@@ -548,24 +546,33 @@ extern int MPI_Get_processor_name(/*@out@*/ char *name, /*@out@*/ int *resultlen
     /*:requires maxSet(name) >= (MPI_MAX_PROCESSOR_NAME-1):*/
     /*@ensures maxRead(name) == (resultlen-1)@*/ ;
 
-#ifdef _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
+#if _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
 
 extern int MPI_Keyval_create(MPI_Copy_function *, MPI_Delete_function *,
-    /*@out@*/ int *, void *);
-extern int MPI_Keyval_free(int *);
+    /*@out@*/ int *, void *)
+    _NULLMPI_ATTR_DEPRECATED;
+extern int MPI_Keyval_free(int *)
+    _NULLMPI_ATTR_DEPRECATED;
 
-extern int MPI_Attr_put(MPI_Comm, int, void *);
-extern int MPI_Attr_get(MPI_Comm, int, /*@out@*/ void *, /*@out@*/ int *);
-extern int MPI_Attr_delete(MPI_Comm, int);
+extern int MPI_Attr_put(MPI_Comm, int, void *)
+    _NULLMPI_ATTR_DEPRECATED;
+extern int MPI_Attr_get(MPI_Comm, int, /*@out@*/ void *, /*@out@*/ int *)
+    _NULLMPI_ATTR_DEPRECATED;
+extern int MPI_Attr_delete(MPI_Comm, int)
+    _NULLMPI_ATTR_DEPRECATED;
 
 
 /* MPI-1.2 */
 
 extern int MPI_Errhandler_create(MPI_Handler_function *,
-    /*@out@*/ /*@only@*/ MPI_Errhandler *);
-extern int MPI_Errhandler_set(MPI_Comm, MPI_Errhandler);
-extern int MPI_Errhandler_get(MPI_Comm, /*@out@*/ MPI_Errhandler *);
-extern int MPI_Errhandler_free(/*@only@*/ MPI_Errhandler *);
+    /*@out@*/ /*@only@*/ MPI_Errhandler *)
+    _NULLMPI_ATTR_DEPRECATED;
+extern int MPI_Errhandler_set(MPI_Comm, MPI_Errhandler)
+    _NULLMPI_ATTR_DEPRECATED;
+extern int MPI_Errhandler_get(MPI_Comm, /*@out@*/ MPI_Errhandler *)
+    _NULLMPI_ATTR_DEPRECATED;
+extern int MPI_Errhandler_free(/*@only@*/ MPI_Errhandler *)
+    _NULLMPI_ATTR_DEPRECATED;
 
 #endif /* _NULLMPI_USE_DEPRECATED_MPI1_FEATURES */
 
@@ -590,7 +597,7 @@ extern double MPI_Wtick(void) /*@*/ ;
  */
 /*@=fcnuse@*/
 
-#ifdef _NULLMPI_USE_MPI2_FEATURES
+#if _NULLMPI_USE_MPI2_FEATURES
 
 /* MPI2 allows passing NULL instead of argv, argc
  * in order to allow libraries to do independent initialization
@@ -599,7 +606,7 @@ extern int MPI_Init(/*@null@*/ int *argc, /*@null@*/ char ***argv)
   /*@globals internalState@*/
   /*@modifies internalState, *argc, *argv@*/ ;
 
-#include "mpi2.h"
+#include <mpi2.h>
 
 #else /* !_NULLMPI_USE_MPI2_FEATURES */
 
@@ -619,7 +626,6 @@ extern int MPI_Initialized(/*@out@*/ int *);
 /*@exits@*/ int MPI_Abort(MPI_Comm, int);
 
 extern int MPI_Pcontrol(const int, ...);
-
 
 /*@=declundef@*/
 /*@=constuse@*/

@@ -5,7 +5,7 @@ include_HEADERS = $(PUBLICHEADERS)
 lib_LIBRARIES = libnullmpi.a
 libnullmpi_a_SOURCES = $(PUBLICHEADERS) $(PRIVATEHEADERS) $(PRIVATESOURCES)
 
-PUBLICHEADERS = mpi.h mpi_types.h mpi2.h
+PUBLICHEADERS = mpi.h mpi_types.h mpi2.h nullmpi_conf.h
 PRIVATEHEADERS = nullmpi.h
 PRIVATESOURCES = \
 	mpi.c \

@@ -71,7 +71,12 @@ int MPI_Comm_remote_group(MPI_Comm comm, MPI_Group *group);
 
 int MPI_Intercomm_create(MPI_Comm local_comm, int local_leader,
                          MPI_Comm peer_comm, int remote_leader, int tag,
-                         MPI_Comm *comm_out);
+                         MPI_Comm *comm_out)
+{
+  NULLMPI_STATS;
+  *comm_out = local_comm;
+  return nullmpi_unsupported();
+}
 
 int MPI_Intercomm_merge(MPI_Comm comm, int high,
                         MPI_Comm *comm_out);
@@ -80,7 +85,7 @@ int MPI_Topo_test(MPI_Comm comm, int *type);
 
 
 /* MPI2 */
-#ifdef _NULLMPI_USE_MPI2_FEATURES
+#if _NULLMPI_USE_MPI2_FEATURES
 
 int MPI_Comm_create_errhandler(MPI_Comm_errhandler_fn *function,
     MPI_Errhandler *errhandler);

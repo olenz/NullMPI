@@ -9,6 +9,13 @@
 
 #ifdef __LCLINT__
 
+/* TODO: a lot to make it really splint-clean: */
+/*@-declundef@*/
+/*@-constuse@*/
+/*@-typeuse@*/
+/*@-exporttype@*/
+/*@-exportconst@*/
+
 /* typedefs */
 
 /*@-fielduse@*/
@@ -34,7 +41,7 @@ typedef /*@abstract@*/ /*@mutable@*/ *MPI_Errhandler;
 typedef /*@abstract@*/ /*@mutable@*/ *MPI_Request;
 
 typedef void (MPI_User_function)(void *, void *, int *, MPI_Datatype *);
-#ifdef _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
+#if _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
 typedef void (MPI_Handler_function)(MPI_Comm *, int *, ...);
 typedef int (MPI_Copy_function)(MPI_Comm, int, void *, void *, void *, int *);
 typedef int (MPI_Delete_function)(MPI_Comm, int, void *, void *);
@@ -56,7 +63,7 @@ typedef int (MPI_Delete_function)(MPI_Comm, int, void *, void *);
 /*@constant MPI_Datatype MPI_LONG_LONG_INT;@*/
 
 /*@constant MPI_Datatype MPI_PACKED;@*/
-#ifdef _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
+#if _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
 /*@constant MPI_Datatype MPI_LB;@*/
 /*@constant MPI_Datatype MPI_UB;@*/
 #endif /* _NULLMPI_USE_DEPRECATED_MPI1_FEATURES */
@@ -145,7 +152,7 @@ typedef int (MPI_Delete_function)(MPI_Comm, int, void *, void *);
 /*@constant MPI_Errhandler MPI_ERRORS_RETURN;@*/
 /*@constant MPI_Errhandler MPIR_ERRORS_WARN;@*/    /*FIXME*/
 
-#ifdef _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
+#if _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
 /*@constant null MPI_Copy_function MPI_NULL_COPY_FN;@*/
 /*@constant null MPI_Delete_function MPI_NULL_DELETE_FN;@*/
 /*@constant null MPI_Copy_function MPI_NULL_DUP_FN;@*/
@@ -177,6 +184,11 @@ typedef int (MPI_Delete_function)(MPI_Comm, int, void *, void *);
 /*@constant int MPI_UNEQUAL;@*/
 /*@constant int MPI_CONGRUENT;@*/
 
+/*@=declundef@*/
+/*@=constuse@*/
+/*@=typeuse@*/
+/*@=exporttype@*/
+/*@=exportconst@*/
 
 #else /* ! __LCLINT__ */
 
@@ -276,7 +288,7 @@ typedef struct
 } MPI_Request;
 
 typedef void (MPI_User_function)(void *, void *, int *, MPI_Datatype *);
-#ifdef _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
+#if _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
 typedef void (MPI_Handler_function)(MPI_Comm *, int *, ...);
 typedef int (MPI_Copy_function)(MPI_Comm, int, void *, void *, void *, int *);
 typedef int (MPI_Delete_function)(MPI_Comm, int, void *, void *);
@@ -289,7 +301,7 @@ typedef int (MPI_Delete_function)(MPI_Comm, int, void *, void *);
 #define MPI_BOTTOM		(MPI_Aint)0
 #define MPI_REQUEST_NULL	(MPI_Request)0
 #define MPI_ERRHANDLER_NULL	(MPI_Errhandler)0
-#ifdef _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
+#if _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
 #define MPI_NULL_COPY_FN	(MPI_Copy_function)0
 #define MPI_NULL_DELETE_FN	(MPI_Delete_function)0
 #define MPI_NULL_DUP_FN		(MPI_Copy_function)0

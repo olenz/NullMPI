@@ -4,6 +4,18 @@
 
 /* these are taken from mpi20-ps */
 
+#ifdef __LCLINT__
+
+/* TODO: a lot to make it really splint-clean: */
+/*@-declundef@*/
+/*@-constuse@*/
+/*@-fcnuse@*/
+/*@-typeuse@*/
+/*@-exporttype@*/
+/*@-exportconst@*/
+/*@-exportfcn@*/
+/*@-protoparamname@*/
+
 /* handles to structures */
 typedef /*@abstract@*/ /*@mutable@*/ *MPI_File;
 typedef /*@abstract@*/ /*@mutable@*/ *MPI_Info;
@@ -12,6 +24,16 @@ typedef /*@abstract@*/ /*@mutable@*/ *MPI_Win;
 typedef /*@abstract@*/ /*@mutable@*/ *MPI_Offset;
 
 typedef /*@abstract@*/ /*@immutable@*/ /*@integraltype@*/ MPI_Fint;
+
+#else /* ! __LCLINT__ */
+
+/* handles to structures */
+typedef int *MPI_File;
+typedef int *MPI_Info;
+typedef int *MPI_Win;
+typedef int *MPI_Offset;
+typedef int MPI_Fint;
+#endif /* ! __LCLINT__ */
 
 /* user defined functions */
 typedef int (MPI_Comm_copy_attr_function)(MPI_Comm oldcomm, int comm_keyval,
@@ -400,7 +422,7 @@ extern int MPI_Grequest_start(MPI_Grequest_query_function *query_fn,
     MPI_Grequest_cancel_function *cancel_fn,
     void *extra_state, /*@out@*/ MPI_Request *request);
 
-extern int MPI_Init_thread(int *argc, char *((*argv)[]),
+extern int MPI_Init_thread(int *argc, char ***argv,
     int required, /*@out@*/ int *provided);
 
 extern int MPI_Is_thread_main(/*@out@*/ int *flag);
@@ -578,3 +600,11 @@ extern int MPI_Type_create_f90_integer(int r, /*@out@*/ MPI_Datatype *newtype);
 extern int MPI_Type_create_f90_real(int p, int r, /*@out@*/ MPI_Datatype *newtype);
 extern int MPI_Type_match_size(int typeclass, int size, /*@out@*/ MPI_Datatype *type);
 
+/*@=declundef@*/
+/*@=constuse@*/
+/*@=fcnuse@*/
+/*@=typeuse@*/
+/*@=exporttype@*/
+/*@=exportconst@*/
+/*@=exportfcn@*/
+/*@=protoparamname@*/

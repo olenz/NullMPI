@@ -2,11 +2,11 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.57)
-AC_INIT([nullmpi], [0.2], [wildenhues@ins.uni-bonn.de])
+AC_INIT([nullmpi], [0.3], [wildenhues@ins.uni-bonn.de])
 AC_REVISION($Revision$)
 AC_CONFIG_SRCDIR([src/mpi.c])
 AC_CONFIG_AUX_DIR(config)
-AC_CONFIG_HEADERS([src/config.h])
+AC_CONFIG_HEADERS([src/config.h src/nullmpi_conf.h])
 AM_INIT_AUTOMAKE([1.7 foreign -Wall])
 
 # Checks for programs.
@@ -27,35 +27,33 @@ AC_CHECK_HEADERS([assert.h sys/resource.h unistd.h])
 AC_CHECK_TYPES([long long int])
 
 # Checks for structures.
-AC_CHECK_MEMBER([struct rusage.ru_utime.tv_sec],,,
-[#if TIME_WITH_SYS_TIME
-# include <sys/time.h>
-# include <time.h>
-#else
-# if HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# else
-#  include <time.h>
-# endif
-#endif
-#if HAVE_SYS_RESOURCE_H
-# include <sys/resource.h>
-#endif
-#if HAVE_UNISTD_H
-# include <unistd.h>
-#endif])
-
 
 # Checks for compiler characteristics.
-AC_C_STRINGIZE
 AC_C_CONST
 AC_C_VAR_FUNC
+attr_dep='__attribute__ ((__deprecated__))'
+AC_MSG_CHECKING([if the compiler understands $attr_dep])
+AC_CACHE_VAL([rw_cv_c_attr_dep],
+	     [AC_COMPILE_IFELSE([int f(void) $attr_dep;
+int f(void) { return 1; }],
+		          	[rw_cv_c_attr_dep="$attr_dep"],
+				[rw_cv_c_attr_dep=])])
+AC_DEFINE_UNQUOTED([_NULLMPI_ATTR_DEPRECATED], [$rw_cv_c_attr_dep])
+case $rw_cv_c_attr_dep in
+	?*) AC_MSG_RESULT([yes]) ;;
+	*) AC_MSG_RESULT([no]) ;;
+esac
 
 # Checks for library functions.
 AC_CHECK_FUNCS([memcpy gettimeofday getrusage])
 
 # Checks for system services
 
-AC_CONFIG_FILES([Makefile src/Makefile])
+# nullmpi features
+AC_DEFINE([_NULLMPI_USE_MPI2_FEATURES], 1)
+AC_DEFINE([_NULLMPI_USE_DEPRECATED_MPI1_FEATURES], 1)
+
+AC_CONFIG_FILES([Makefile src/Makefile
+		 man/mpicc.1 man/mpiCC.1 man/mpiexec.1])
 AC_CONFIG_FILES([bin/mpicc bin/mpiCC bin/mpiexec], [chmod u+x bin/mpi*])
 AC_OUTPUT
