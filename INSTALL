@@ -2,3 +2,5 @@ The usual GNU installation instructions apply.
   configure [OPTIONS]
   make
   make install
+
+Adding `-Wno-unused' to CFLAGS is recommended for gcc.
