@@ -29,7 +29,6 @@ do
 		;;
 		-n|-np)
 		n="$1"
-		shift
 		if test 1 -ne "$n"
 		then
 			echo >&2 "$prog: more than one process is unsupported."
