@@ -4,7 +4,7 @@
 AC_PREREQ(2.57)
 AC_INIT([nullmpi], [0.5], [wildenhues@ins.uni-bonn.de])
 AC_REVISION($Revision$)
-AC_CONFIG_SRCDIR([src/mpi.c])
+AC_CONFIG_SRCDIR([src/nullmpi.c])
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_HEADERS([src/config.h])
 AX_PREFIX_CONFIG_H([src/nullmpi_conf.h], [_NULLMPI])
@@ -26,23 +26,29 @@ AC_CHECK_HEADERS([assert.h sys/resource.h unistd.h])
 
 # Checks for types.
 AC_CHECK_TYPES([long long int])
+AC_CHECK_SIZEOF(short)
+AC_CHECK_SIZEOF(int)
+AC_CHECK_SIZEOF(long)
+AC_CHECK_SIZEOF(float)
+AC_CHECK_SIZEOF(double)
+AC_CHECK_SIZEOF(long double)
+AC_CHECK_SIZEOF(long long)
 
 # Checks for structures.
 
 # Checks for compiler characteristics.
 AC_C_CONST
 AC_C_VAR_FUNC
-attr_dep='__attribute__ ((__deprecated__))'
-AC_MSG_CHECKING([if the compiler understands $attr_dep])
-AC_CACHE_VAL([rw_cv_c_attr_dep],
-	     [AC_COMPILE_IFELSE([int f(void) $attr_dep;
-int f(void) { return 1; }],
-		          	[rw_cv_c_attr_dep="$attr_dep"],
-				[rw_cv_c_attr_dep=])])
-AC_DEFINE_UNQUOTED([ATTR_DEPRECATED], [$rw_cv_c_attr_dep], [define if your compiler understands __attribute__ ((deprecated)) or alike])
-case $rw_cv_c_attr_dep in
-	?*) AC_MSG_RESULT([yes]) ;;
-	*) AC_MSG_RESULT([no]) ;;
+AC_MSG_CHECKING([if the compiler understands __attribute__])
+AC_CACHE_VAL([rw_cv_c_attribute],
+	     [AC_COMPILE_IFELSE([int f(void) __attribute__((__pure__,__deprecated__));
+	      int f(void) { return 1; }],
+	      [rw_cv_c_attribute=yes],[rw_cv_c_attribute=no])])
+case $rw_cv_c_attribute in
+	yes) AC_MSG_RESULT([yes])
+	AC_DEFINE(HAVE_ATTRIBUTE, 1, [define if the compiler understands __attribute__])
+	;;
+	no) AC_MSG_RESULT([no]) ;;
 esac
 
 # Checks for library functions.
@@ -55,7 +61,17 @@ AC_DEFINE([USE_MPI2_FEATURES], 1, [define if you want to make use of MPI2 featur
 AC_DEFINE([USE_DEPRECATED_MPI1_FEATURES], 1, [define if you want to make use of deprecated MPI1 features])
 
 AH_TOP([/*@-namechecks@*/])
-AH_BOTTOM([/*@=namechecks@*/])
+AH_BOTTOM([#if defined(_NULLMPI_HAVE_ATTRIBUTE) || defined(HAVE_ATTRIBUTE)
+# define __nullmpi_attribute__(a) __attribute__(a)
+#else
+# define __nullmpi_attribute__(a)
+#endif
+
+/* splint null checking: allow for valid user code */
+#ifndef _NULLMPI_NULL
+# define _NULLMPI_NULL /*@null@*/
+#endif
+/*@=namechecks@*/])
 
 AC_CONFIG_FILES([Makefile src/Makefile
 		 man/mpicc.1 man/mpiCC.1 man/mpiexec.1])

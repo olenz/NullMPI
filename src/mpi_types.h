@@ -89,6 +89,8 @@ typedef int (MPI_Delete_function)(MPI_Comm, int, void *, void *);
 /*@constant MPI_Datatype MPI_2DOUBLE_PRECISION;@*/
 /*@constant MPI_Datatype MPI_CHARACTER;@*/
 
+/*@constant int NULLMPI_MAX_DATATYPE;@*/
+
 /* communicators */
 /*@constant MPI_Comm MPI_COMM_WORLD;@*/
 /*@constant MPI_Comm MPI_COMM_SELF;@*/
@@ -236,7 +238,8 @@ typedef enum
   MPI_2DOUBLE_COMPLEX,
   MPI_2REAL,
   MPI_2DOUBLE_PRECISION,
-  MPI_CHARACTER
+  MPI_CHARACTER,
+  NULLMPI_MAX_DATATYPE
 } MPI_Datatype;
 
 /* Communicators */

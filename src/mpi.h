@@ -28,6 +28,11 @@ extern "C" {
 
 #include <mpi_types.h>
 
+/* TODO: some splint annotations (mostly @null@) have been commented out
+ * (like this: .null.), because they don't apply in the one-process case.
+ * This helps splinting nullmpi, but it doesn't help splinting the final
+ * application.
+ */
 /* TODO: a lot to make it really splint-clean: */
 /*@-declundef@*/
 /*@-fcnuse@*/
@@ -222,22 +227,22 @@ extern int MPI_Type_indexed(int count, int blocklens[], int indices[],
 #if _NULLMPI_USE_DEPRECATED_MPI1_FEATURES
 extern int MPI_Type_hindexed(int, int *, MPI_Aint *, MPI_Datatype,
     /*@out@*/ MPI_Datatype *)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 extern int MPI_Type_hvector(int, int, MPI_Aint, MPI_Datatype,
     /*@out@*/ MPI_Datatype *)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 extern int MPI_Type_struct(int, int *, MPI_Aint *, MPI_Datatype *,
     /*@out@*/ MPI_Datatype *)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 extern int MPI_Address(void *, /*@out@*/ MPI_Aint *)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 
 extern int MPI_Type_extent(MPI_Datatype, /*@out@*/ MPI_Aint *)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 extern int MPI_Type_lb(MPI_Datatype, /*@out@*/ MPI_Aint*)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 extern int MPI_Type_ub(MPI_Datatype, /*@out@*/ MPI_Aint*)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 #endif /* _NULLMPI_USE_DEPRECATED_MPI1_FEATURES */
 
 /* see mpi-20.ps. It clarifies the declaration below as correct
@@ -290,28 +295,28 @@ extern int MPI_Bcast(/*@reldef@*/ void *buf, int count, MPI_Datatype datatype,
     /*@ensures maxRead(buf) == (count-1)@*/ ;
 
 extern int MPI_Gather(void *sendbuf, int sendcnt, MPI_Datatype sendtype,
-    /*@null@*/ /*@out@*/ void *recvbuf, int recvcnt, MPI_Datatype recvtype,
+    _NULLMPI_NULL /*@out@*/ /*@unique@*/ void *recvbuf, int recvcnt, MPI_Datatype recvtype,
     int root, MPI_Comm comm)
     /*@modifies recvbuf@*/
     /*@requires maxRead(sendbuf) >= (sendcnt-1)@*/ ;
 
 extern int MPI_Gatherv(void *sendbuf, int sendcnt, MPI_Datatype sendtype,
-    /*@null@*/ /*@out@*/ void *recvbuf, int recvcnts[], int displs[],
+    _NULLMPI_NULL /*@out@*/ /*@unique@*/ void *recvbuf, int recvcnts[], int displs[],
     MPI_Datatype recvtype, int root, MPI_Comm comm)
     /*@modifies recvbuf@*/
     /*@requires maxRead(sendbuf) >= (sendcnt-1)@*/ ;
 
-extern int MPI_Scatter(/*@null@*/ void *sendbuf, int sendcnt,
+extern int MPI_Scatter(_NULLMPI_NULL void *sendbuf, int sendcnt,
     MPI_Datatype sendtype,
-    /*@out@*/ void *recvbuf, int recvcnt, MPI_Datatype recvtype,
+    /*@out@*/ /*@unique@*/ void *recvbuf, int recvcnt, MPI_Datatype recvtype,
     int root, MPI_Comm comm)
     /*@modifies recvbuf@*/
     /*@requires maxSet(recvbuf) >= (recvcnt-1)@*/
     /*@ensures maxRead(recvbuf) == (recvcnt-1)@*/ ;
 
-extern int MPI_Scatterv(/*@null@*/ void *sendbuf,
-    /*@null@*/ int *sendcnts, /*@null@*/ int *displs, MPI_Datatype sendtype,
-    /*@out@*/ void *recvbuf, int recvcnt, MPI_Datatype recvtype,
+extern int MPI_Scatterv(_NULLMPI_NULL void *sendbuf,
+    _NULLMPI_NULL int *sendcnts, _NULLMPI_NULL int *displs, MPI_Datatype sendtype,
+    /*@out@*/ /*@unique@*/ void *recvbuf, int recvcnt, MPI_Datatype recvtype,
     int root, MPI_Comm comm)
     /*@modifies recvbuf@*/
     /*@ensures maxRead(recvbuf) == (recvcnt-1)@*/ ;
@@ -331,7 +336,7 @@ extern int MPI_Allgatherv(void *sendbuf, int sendcount, MPI_Datatype sendtype,
     /*@requires maxRead(sendbuf) >= (sendcount-1)@*/ ;
 
 extern int MPI_Alltoall(void *sendbuf, int sendcount, MPI_Datatype sendtype,
-    /*@out@*/ void *recvbuf, int recvcnt, MPI_Datatype recvtype,
+    /*@out@*/ /*@unique@*/ void *recvbuf, int recvcnt, MPI_Datatype recvtype,
     MPI_Comm comm)
     /*@modifies recvbuf@*/ ;
 
@@ -341,7 +346,7 @@ extern int MPI_Alltoallv(void *sendbuf, int *sendcnts, int *sdispls,
     MPI_Datatype recvtype, MPI_Comm comm)
     /*@modifies recvbuf@*/ ;
 
-extern int MPI_Reduce(void *sendbuf, /*@out@*/ /*@null@*/ void *recvbuf,
+extern int MPI_Reduce(void *sendbuf, /*@out@*/ _NULLMPI_NULL /*@unique@*/ void *recvbuf,
     int count, MPI_Datatype datatype, MPI_Op op, int root, MPI_Comm comm)
     /*@modifies recvbuf@*/
     /*@requires maxRead(sendbuf) >= (count-1)@*/ ;
@@ -353,11 +358,11 @@ extern int MPI_Allreduce(void *sendbuf, /*@out@*/ /*@unique@*/ void *recvbuf,
              /\ maxSet(recvbuf) >= (count-1)@*/
     /*@ensures maxRead(recvbuf) == (count-1)@*/ ;
 
-extern int MPI_Reduce_scatter(void *sendbuf, /*@out@*/ void *recvbuf,
+extern int MPI_Reduce_scatter(void *sendbuf, /*@out@*/ /*@unique@*/ void *recvbuf,
     int *recvcnts, MPI_Datatype datatype, MPI_Op op, MPI_Comm comm)
     /*@modifies recvbuf@*/ ;
 
-extern int MPI_Scan(void *sendbuf, /*@out@*/ void *recvbuf,
+extern int MPI_Scan(void *sendbuf, /*@out@*/ /*@unique@*/ void *recvbuf,
     int count, MPI_Datatype datatype, MPI_Op op, MPI_Comm comm)
     /*@modifies recvbuf@*/
     /*@requires maxRead(sendbuf) >= (count-1)
@@ -550,29 +555,29 @@ extern int MPI_Get_processor_name(/*@out@*/ char *name, /*@out@*/ int *resultlen
 
 extern int MPI_Keyval_create(MPI_Copy_function *, MPI_Delete_function *,
     /*@out@*/ int *, void *)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 extern int MPI_Keyval_free(int *)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 
 extern int MPI_Attr_put(MPI_Comm, int, void *)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 extern int MPI_Attr_get(MPI_Comm, int, /*@out@*/ void *, /*@out@*/ int *)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 extern int MPI_Attr_delete(MPI_Comm, int)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 
 
 /* MPI-1.2 */
 
 extern int MPI_Errhandler_create(MPI_Handler_function *,
     /*@out@*/ /*@only@*/ MPI_Errhandler *)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 extern int MPI_Errhandler_set(MPI_Comm, MPI_Errhandler)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 extern int MPI_Errhandler_get(MPI_Comm, /*@out@*/ MPI_Errhandler *)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 extern int MPI_Errhandler_free(/*@only@*/ MPI_Errhandler *)
-    _NULLMPI_ATTR_DEPRECATED;
+    __nullmpi_attribute__((__deprecated__));
 
 #endif /* _NULLMPI_USE_DEPRECATED_MPI1_FEATURES */
 
@@ -589,7 +594,8 @@ extern int MPI_Error_class(int errorcode, /*@out@*/ int *errorclass)
     /*@modifies errorclass@*/ ;
 
 extern double MPI_Wtime(void) /*@*/ ;
-extern double MPI_Wtick(void) /*@*/ ;
+extern double MPI_Wtick(void) /*@*/
+  __nullmpi_attribute__((__const__));
 
 
 /* MPI_Init and MPI_Finalize should be called in a complete MPI program,
@@ -623,7 +629,8 @@ extern int MPI_Finalize(void)
 /*@-fcnuse@*/
 
 extern int MPI_Initialized(/*@out@*/ int *);
-/*@exits@*/ int MPI_Abort(MPI_Comm, int);
+/*@exits@*/ int MPI_Abort(MPI_Comm, int)
+  __nullmpi_attribute__((noreturn));
 
 extern int MPI_Pcontrol(const int, ...);
 
