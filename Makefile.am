@@ -17,7 +17,7 @@ CVS2CLFLAGS = --accum
 
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \
-	rm -f mpirun$(EXEEXT) && \
+	rm -f mpirun$(EXEEXT) mpicxx$(EXEEXT) && \
 	$(LN_S) mpiexec$(EXEEXT) mpirun$(EXEEXT) && \
 	$(LN_S) mpiCC$(EXEEXT) mpicxx$(EXEEXT)
 
