@@ -8,15 +8,11 @@ MPICC="@CC@"
 MPICPPFLAGS="-I@includedir@"
 MPILDFLAGS="-L@libdir@ -lnullmpi"
 
-case $ZSH_VERSION in ?*) alias -g '${1+"$@"}="$@"';; esac
-
 DoLink=1
 DoCompile=0
-eat=no
 for arg
 do
-	shift
-	case $arg in
+	case $1 in
 		-h|--help)
 		$usage
 		exit 0
@@ -32,11 +28,13 @@ do
 		DoCompile=1
 		;;
 		-cc=*)
-		MPICC=`echo x$arg | sed 's/x-cc=//'`
+		MPICC=`echo x"$1" | sed 's/x-cc=//'`
 		continue
 		;;
 	esac
-	set x ${1+"$@"} "$arg"; shift
+	set x "$@" "$1"
+       	shift
+	shift
 done
 case $DoLink in
 	0)
@@ -49,5 +47,5 @@ case $DoCompile in
 	;;
 esac
 
-exec $MPICC $MPICPPFLAGS ${1+"$@"} $MPILDFLAGS
+exec $MPICC $MPICPPFLAGS "$@" $MPILDFLAGS
 exit 1

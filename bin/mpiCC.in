@@ -8,14 +8,14 @@ MPICXX="@CXX@"
 MPICPPFLAGS="-I@includedir@"
 MPILDFLAGS="-L@libdir@ -lnullmpi"
 
-case $ZSH_VERSION in ?*) alias -g '${1+"$@"}="$@"';; esac
+set x "$@"
+shift
 
 DoLink=1
 DoCompile=0
 for arg
 do
-	shift
-	case $arg in
+	case $1 in
 		-h|--help)
 		$usage
 		exit 0
@@ -31,11 +31,14 @@ do
 		DoCompile=1
 		;;
 		-CC=*)
-		MPICXX=`echo x$arg | sed 's/x-CC=//'`
+		MPICXX=`echo x$1 | sed 's/x-CC=//'`
+		shift
 		continue
 		;;
 	esac
-	set x ${1+"$@"} "$arg"; shift
+	set x "$@" "$1"
+       	shift
+	shift
 done
 case $DoLink in
 	0)
@@ -48,5 +51,5 @@ case $DoCompile in
 	;;
 esac
 
-exec $MPICXX $MPICPPFLAGS ${1+"$@"} $MPILDFLAGS
+exec $MPICXX $MPICPPFLAGS "$@" $MPILDFLAGS
 exit 1

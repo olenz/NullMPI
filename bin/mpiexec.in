@@ -3,49 +3,47 @@ prog="$0"
 usage="echo $prog [ -hv ] [ -n <procs> | -np <procs> ] <program>"
 version="echo @PACKAGE@-@VERSION@"
 
-case $ZSH_VERSION in ?*) alias -g '${1+"$@"}="$@"';; esac
-
 eat=no
 fin=
 for arg
 do
-	shift
 	case $eat in
 		yes)
 		eat=no
-		continue
-		;;
-		no)
-		;;
-	esac
-	case $fin$arg in
-		-h|--help)
-		$usage
-		exit 0
-		;;
-		-v|--version)
-		$version
-		exit 0
-		;;
-		-n|-np)
-		n="$1"
-		if test 1 -ne "$n"
-		then
-			echo >&2 "$prog: more than one process is unsupported."
-			exit 1
-		fi
-		eat=yes
-		;;
-		-*)
-		echo >&2 "$prog: option $arg not supported"
-		exit 1
 		;;
 		*)
-		set x ${1+"$@"} "$arg"; shift
-		fin=yes
+		case $fin$arg in
+			-h|--help)
+			$usage
+			exit 0
+			;;
+			-v|--version)
+			$version
+			exit 0
+			;;
+			-n|-np)
+			n=$2
+			if test 1 -ne "$n"
+			then
+				echo "$prog: more than one process is unsupported." >&2
+				exit 1
+			fi
+			eat=yes
+			;;
+			-*)
+			echo >&2 "$prog: option $arg not supported"
+			exit 1
+			;;
+			*)
+			set x "$@" "$arg"
+			shift
+			fin=yes
+			;;
+		esac
 		;;
 	esac
+	shift
 done
 
-exec ${1+"$@"}
+exec "$@"
 exit 1
