@@ -1,0 +1,51 @@
+#! /bin/sh
+# @configure_input@
+# regenerate with './config.status --file makerelease'.
+# local setup for releasing, installing, uptodate-checks.
+# This file is not distributed.
+
+# setup: fail as early as possible.
+set -e -x
+name=@PACKAGE@
+tarname=@PACKAGE_TARNAME@
+rel=@VERSION@
+
+# get a clean tree.
+tdir=`mktemp -d /tmp/inst-$name.XXXXXX`
+trap "echo please \"rm -rf $tdir\"" 0 1 2 3 13 15
+cd $tdir
+cvs -d :ext:$USER@adamantium:/home/wildenhu/cvsroot co $name
+cd $package
+
+# make sure to have a CVS entry for the release, preferably in the NEWS file.
+sed -n 1p NEWS | grep "$rel" >/dev/null
+
+# create and check for up to date ChangeLog.
+touch ChangeLog
+cvs2cl --accum
+sed -n 3p ChangeLog | grep "$rel.*released" >/dev/null
+
+# build for local install as well as distribution.
+./bootstrap
+./configure -C --prefix=/opt/packages/$tarname-$rel
+make
+make dist
+make distcheck
+
+# distribution.
+scp $tarname-$rel.tar.gz wildenhu@adamantium:$name/
+#scp $tarname-$rel.tar.gz wissadm@hermes:download/$name/
+
+# local install.
+find . | xargs chmod a+r
+find .. -type d | xargs chmod a+rx
+su swadmin -c "make install && \
+ cd /opt/packages && \
+ rm -f $tarname && \
+ ln -s $tarname-$rel $tarname && \
+ scp -r -p $tarname-$rel adamantium:/opt/packages"
+ssh -l swadmin adamantium "cd /opt/packages && \
+ rm -f $tarname && \
+ ln -s $tarname-$rel $tarname"
+
+# write announcements...
