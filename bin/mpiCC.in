@@ -35,7 +35,7 @@ do
 		continue
 		;;
 	esac
-	set -- ${1+"$@"} "$arg"
+	set x ${1+"$@"} "$arg"; shift
 done
 case $DoLink in
 	0)

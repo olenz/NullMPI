@@ -41,7 +41,7 @@ do
 		exit 1
 		;;
 		*)
-		set -- ${1+"$@"} "$arg"
+		set x ${1+"$@"} "$arg"; shift
 		break
 		;;
 	esac
