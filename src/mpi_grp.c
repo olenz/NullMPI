@@ -1,3 +1,6 @@
+/* $Id$ */
+/* Group handling */
+
 #include "nullmpi.h"
 
 extern int MPI_Group_size(MPI_Group group, /*@out@*/ int *size)

@@ -1,4 +1,5 @@
-/* nullmpi mpi.c */
+/* $Id$ */
+/* Initialization and Miscellaneous */
 
 #include "nullmpi.h"
 

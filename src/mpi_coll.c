@@ -1,6 +1,7 @@
-#include "nullmpi.h"
-
+/* $Id$ */
 /* Collective communication */
+
+#include "nullmpi.h"
 
 /* Helper */
 static size_t SizeofMPIDatatype (MPI_Datatype type)

@@ -1,4 +1,5 @@
-/* mpi_ptp.c */
+/* $Id$ */
+/* Point-to-point communication */
 
 #include "nullmpi.h"
 

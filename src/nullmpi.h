@@ -1,4 +1,5 @@
-/* nullmpi.h */
+/* $Id$ */
+/* private data and portability header */
 
 #include "config.h"
 

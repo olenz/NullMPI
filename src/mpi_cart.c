@@ -1,3 +1,6 @@
+/* $Id$ */
+/* Topology handling */
+
 #include "nullmpi.h"
 
 int MPI_Cart_create(MPI_Comm comm_old, int ndims,

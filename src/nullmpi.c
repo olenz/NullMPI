@@ -1,3 +1,6 @@
+/* $Id$ */
+/* private data */
+
 #include "nullmpi.h"
 
 static int initialized;

@@ -9,12 +9,13 @@ Nullmpi allows global communications, but does not implement
 point-to-point communications to self.  Timing is supported.
 Compilation options allow for debug and statistics output.
 
-Furthermore, the set of headers can be used with splint[1] for
+Furthermore, the set of headers can be used with the static
+source code checker splint (see http://splint.org/) for
 portability testing.
 
 For installation, please read the file INSTALL.
 The newest available version can be obtained at
-http://wissrech.ins.uni-bonn.de/people/wildenhues/nullmpi/
-Please direct feedback at wildenhues@ins.uni-bonn.de.
+http://wissrech.ins.uni-bonn.de/research/software/nullmpi/.
+Please direct feedback to wildenhues@ins.uni-bonn.de.
 
-[1] http://splint.org/
+$Id$

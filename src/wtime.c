@@ -1,3 +1,6 @@
+/* $Id$ */
+/* Timer handling */
+
 #include "nullmpi.h"
 
 #if TIME_WITH_SYS_TIME
