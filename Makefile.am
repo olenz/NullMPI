@@ -8,6 +8,7 @@ bin_SCRIPTS = bin/mpicc bin/mpiCC bin/mpiexec
 man1_MANS = man/mpicc.1 man/mpiCC.1 man/mpiexec.1 man/mpirun.1
 EXTRA_DIST = bin/mpicc.in bin/mpiCC.in bin/mpiexec.in m4/ac_c_var_func.m4 \
 	     man/mpirun.1
+DISTCLEANFILES = _configs.sed src/nullmpi_conf.h
 
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \

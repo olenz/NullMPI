@@ -6,7 +6,8 @@ AC_INIT([nullmpi], [0.3], [wildenhues@ins.uni-bonn.de])
 AC_REVISION($Revision$)
 AC_CONFIG_SRCDIR([src/mpi.c])
 AC_CONFIG_AUX_DIR(config)
-AC_CONFIG_HEADERS([src/config.h src/nullmpi_conf.h])
+AC_CONFIG_HEADERS([src/config.h])
+AX_PREFIX_CONFIG_H([src/nullmpi_conf.h], [_NULLMPI])
 AM_INIT_AUTOMAKE([1.7 foreign -Wall])
 
 # Checks for programs.
@@ -38,7 +39,7 @@ AC_CACHE_VAL([rw_cv_c_attr_dep],
 int f(void) { return 1; }],
 		          	[rw_cv_c_attr_dep="$attr_dep"],
 				[rw_cv_c_attr_dep=])])
-AC_DEFINE_UNQUOTED([_NULLMPI_ATTR_DEPRECATED], [$rw_cv_c_attr_dep])
+AC_DEFINE_UNQUOTED([ATTR_DEPRECATED], [$rw_cv_c_attr_dep], [define if your compiler understands __attribute__ ((deprecated)) or alike])
 case $rw_cv_c_attr_dep in
 	?*) AC_MSG_RESULT([yes]) ;;
 	*) AC_MSG_RESULT([no]) ;;
@@ -50,8 +51,11 @@ AC_CHECK_FUNCS([memcpy gettimeofday getrusage])
 # Checks for system services
 
 # nullmpi features
-AC_DEFINE([_NULLMPI_USE_MPI2_FEATURES], 1)
-AC_DEFINE([_NULLMPI_USE_DEPRECATED_MPI1_FEATURES], 1)
+AC_DEFINE([USE_MPI2_FEATURES], 1, [define if you want to make use of MPI2 features])
+AC_DEFINE([USE_DEPRECATED_MPI1_FEATURES], 1, [define if you want to make use of deprecated MPI1 features])
+
+AH_TOP([/*@-namechecks@*/])
+AH_BOTTOM([/*@=namechecks@*/])
 
 AC_CONFIG_FILES([Makefile src/Makefile
 		 man/mpicc.1 man/mpiCC.1 man/mpiexec.1])
