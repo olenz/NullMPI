@@ -1,22 +1,26 @@
 #include "nullmpi.h"
 #include "ptp.h"
 
+/*@access MPI_Comm@*/
+/*@access MPI_Request@*/
+
 struct ptplist {
-  /*@only@*/ ptplist *next;
-  /*@dependent@*/ ptplist *prev;
-  /*@null@*/ void *buf;
+  /*@null@*/ /*@dependent@*/ ptplist *next;
+  /*@null@*/ /*@dependent@*/ ptplist *prev;
+  /*@dependent@*/ void *buf;
   size_t size;
   int tag;
-  int comm;
+  MPI_Comm comm;
   int done;
   int issend;
 };
 
-static ptplist sendlist[1] = { { sendlist, sendlist, NULL, 0, 0, 0, 0, 0 } };
-static ptplist recvlist[1] = { { recvlist, recvlist, NULL, 0, 0, 0, 0, 0 } };
+static ptplist sendlist[1] = { { sendlist, sendlist, NULL, 0, 0, MPI_COMM_NULL, 0, 0 } };
+static ptplist recvlist[1] = { { recvlist, recvlist, NULL, 0, 0, MPI_COMM_NULL, 0, 0 } };
 
-/*@null@*/ /*@dependent@*/ ptplist *
-nullmpi_append_ptp(ptplist *list, /*@null@*/ /*@only@*/ ptplist *r)
+static void
+nullmpi_append_ptp(/*@dependent@*/ ptplist *list, /*@null@*/ /*@dependent@*/ ptplist *r)
+  /*@requires notnull list->next, list->prev@*/
 {
   if (r) {
     nullmpi_assert(r->next == NULL);
@@ -25,12 +29,10 @@ nullmpi_append_ptp(ptplist *list, /*@null@*/ /*@only@*/ ptplist *r)
     r->prev = list->prev;
     list->prev->next = r;
     list->prev = r;
-    return r;
   }
-  return NULL;
 }
 
-ptplist *
+static void
 nullmpi_dequeue_ptp(ptplist *r)
 {
   nullmpi_assert(r != NULL);
@@ -40,7 +42,6 @@ nullmpi_dequeue_ptp(ptplist *r)
   r->next->prev = r->prev;
   r->next = NULL;
   r->prev = NULL;
-  return r;
 }
 
 static int
@@ -54,11 +55,12 @@ request_match(const ptplist *r1, const ptplist *r2)
     return 0;
 }
 
-/*@null@*/ /*@dependent@*/ ptplist *
+static /*@null@*/ /*@dependent@*/ ptplist *
 nullmpi_find_ptp(ptplist *list, const ptplist *request)
 {
   ptplist *l;
   for (l = list->next; l != list; l = l->next) {
+    nullmpi_assert(l != NULL);
     nullmpi_assert(!l->done);
     if (request_match(l, request))
       break;
@@ -66,7 +68,7 @@ nullmpi_find_ptp(ptplist *list, const ptplist *request)
   return l == list ? NULL : l;
 }
 
-int
+static int
 nullmpi_process_ptp(/*@null@*/ ptplist *send, /*@null@*/ ptplist *recv)
 {
   if (send && recv) {
@@ -81,8 +83,9 @@ nullmpi_process_ptp(/*@null@*/ ptplist *send, /*@null@*/ ptplist *recv)
   return 0;
 }
 
-void
-nullmpi_ptp(/*@out@*/ ptplist *r, void *buf, size_t size, int tag, int comm, int issend)
+static void
+nullmpi_ptp(/*@out@*/ ptplist *r, /*@dependent@*/ void *buf, size_t size,
+    int tag, MPI_Comm comm, int issend)
 {
   nullmpi_assert(buf != NULL);
   nullmpi_assert(tag >= 0 && (tag <= MPI_TAG_UB || tag == MPI_ANY_TAG));
@@ -96,8 +99,8 @@ nullmpi_ptp(/*@out@*/ ptplist *r, void *buf, size_t size, int tag, int comm, int
   r->issend = issend;
 }
 
-/*@null@*/ /*@only@*/ ptplist *
-nullmpi_new_ptp(void *buf, size_t size, int tag, int comm, int issend)
+static /*@null@*/ /*@only@*/ ptplist *
+nullmpi_new_ptp(/*@dependent@*/ void *buf, size_t size, int tag, MPI_Comm comm, int issend)
 {
   ptplist *r = (ptplist*) malloc(sizeof *r);
   if (r)
@@ -105,33 +108,36 @@ nullmpi_new_ptp(void *buf, size_t size, int tag, int comm, int issend)
   return r;
 }
 
-/*@null@*/ /*@dependent@*/ ptplist *
-nullmpi_queue_ptp(void *buf, size_t size, int tag, int comm, int issend)
+/*@null@*/ /*@only@*/ ptplist *
+nullmpi_queue_ptp(/*@dependent@*/ void *buf, size_t size, int tag, MPI_Comm comm, int issend)
 {
   ptplist *other;
   ptplist *r = nullmpi_new_ptp(buf, size, tag, comm, issend);
-  switch (issend) {
-  case ISSEND:
-    if ((other = nullmpi_find_ptp(recvlist, r))) {
-      if (!nullmpi_process_ptp(r, other))
-	nullmpi_dequeue_ptp(other);
-     } else
-      r = nullmpi_append_ptp(sendlist, r);
-    break;
-  case ISRECV:
-    if ((other = nullmpi_find_ptp(sendlist, r))) {
-      if (!nullmpi_process_ptp(other, r))
-	nullmpi_dequeue_ptp(other);
-    } else
-      r = nullmpi_append_ptp(recvlist, r);
-    break;
-  default:
-    /*NOTREACHED*/ ;
+  if (r) {
+    switch (issend) {
+    case ISSEND:
+      if ((other = nullmpi_find_ptp(recvlist, r))) {
+	if (!nullmpi_process_ptp(r, other))
+	  nullmpi_dequeue_ptp(other);
+      } else
+	nullmpi_append_ptp(sendlist, r);
+      break;
+    case ISRECV:
+      if ((other = nullmpi_find_ptp(sendlist, r))) {
+	if (!nullmpi_process_ptp(other, r))
+	  nullmpi_dequeue_ptp(other);
+      } else
+	nullmpi_append_ptp(recvlist, r);
+      break;
+    default:
+      /*NOTREACHED*/ ;
+    }
   }
   return r;
 }
 
-void nullmpi_delete_ptp(/*@null@*/ /*@out@*/ /*@only@*/ ptplist *r)
+static void
+nullmpi_delete_ptp(/*@null@*/ /*@only@*/ ptplist *r)
 {
   if (r) {
     nullmpi_assert(r->next == NULL);
