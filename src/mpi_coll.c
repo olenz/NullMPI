@@ -107,8 +107,8 @@ int MPI_Alltoall(void *sendbuf, int sendcount, MPI_Datatype sendtype,
     MPI_Comm comm)
 {
   NULLMPI_STATS;
-  nullmpi_assert (SizeofMPIDatatype (sendtype) * sendcount
-      == SizeofMPIDatatype (recvtype) * recvcount);
+  nullmpi_assert (SizeofMPIDatatype (sendtype) * sendcount ==
+                  SizeofMPIDatatype (recvtype) * recvcount);
   memcpy (recvbuf, sendbuf, SizeofMPIDatatype (sendtype) * sendcount);
   return MPI_SUCCESS;
 }
@@ -119,8 +119,8 @@ int MPI_Alltoallv(void *sendbuf, int *sendcounts, int *sdispls,
     MPI_Datatype recvtype, MPI_Comm comm)
 {
   NULLMPI_STATS;
-  nullmpi_assert (SizeofMPIDatatype (sendtype) * sendcounts[0]
-      == SizeofMPIDatatype (recvtype) * recvcounts[0]);
+  nullmpi_assert (SizeofMPIDatatype (sendtype) * sendcounts[0] ==
+                  SizeofMPIDatatype (recvtype) * recvcounts[0]);
   memcpy ((char *)recvbuf + rdispls[0] * SizeofMPIDatatype (sendtype),
           (char *)sendbuf + sdispls[0] * SizeofMPIDatatype (sendtype),
 	  SizeofMPIDatatype (sendtype) * sendcounts[0]);
