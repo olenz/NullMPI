@@ -593,9 +593,10 @@ extern int MPI_Error_string(int errorcode,
 extern int MPI_Error_class(int errorcode, /*@out@*/ int *errorclass)
     /*@modifies errorclass@*/ ;
 
-extern double MPI_Wtime(void) /*@*/ ;
+extern double MPI_Wtime(void) /*@*/
+  __nullmpi_attribute__((__warn_unused_result__));
 extern double MPI_Wtick(void) /*@*/
-  __nullmpi_attribute__((__const__));
+  __nullmpi_attribute__((__const__,__warn_unused_result__));
 
 
 /* MPI_Init and MPI_Finalize should be called in a complete MPI program,
