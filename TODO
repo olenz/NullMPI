@@ -17,3 +17,6 @@ MPI_Cart* do not do the right thing.
 make MPI_Wtime more portable.  Can MPI_Wtick be made more accurate?
 
 use dist-hook: or similar to update ChangeLog automagically.
+
+PMPI_* weak symbols.
+One public function per file, since they have to be overridable one by one.
