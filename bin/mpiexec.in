@@ -36,6 +36,7 @@ do
 		;;
 		-*)
 		echo >&2 "$prog: option $arg not supported"
+		exit 1
 		;;
 		*)
 		set -- ${1+"$@"} "$arg"

@@ -2,9 +2,9 @@
 prog="$0"
 usage="echo $prog [ -hv ] [ -cc=<C-compiler> ] [ compile and/or link options ]"
 version="echo @PACKAGE@-@VERSION@"
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-MPICC=@CC@
+prefix="@prefix@"
+exec_prefix="@exec_prefix@"
+MPICC="@CC@"
 MPICPPFLAGS="-I@includedir@"
 MPILDFLAGS="-L@libdir@ -lnullmpi"
 
@@ -45,4 +45,5 @@ case $DoCompile in
 	MPICPPFLAGS=
 esac
 
-$MPICC $MPICPPFLAGS ${1+"$@"} $MPILDFLAGS
+exec $MPICC $MPICPPFLAGS ${1+"$@"} $MPILDFLAGS
+exit 1
