@@ -38,17 +38,26 @@ PRIVATEAPISOURCES = \
 	mpi_cancel.c \
 	mpi_cart_coords.c \
 	mpi_cart_create.c \
+	mpi_cart_get.c \
+	mpi_cart_map.c \
 	mpi_cart_rank.c \
+	mpi_cart_shift.c \
+	mpi_cart_sub.c \
 	mpi_cartdim_get.c \
 	mpi_comm_compare.c \
 	mpi_comm_create.c \
 	mpi_comm_dup.c \
 	mpi_comm_free.c \
+	mpi_comm_group.c \
 	mpi_comm_rank.c \
+	mpi_comm_remote_group.c \
+	mpi_comm_remote_size.c \
 	mpi_comm_set_errhandler.c \
 	mpi_comm_size.c \
 	mpi_comm_split.c \
 	mpi_comm_test_inter.c \
+	mpi_error_class.c \
+	mpi_error_string.c \
 	mpi_finalize.c \
 	mpi_gather.c \
 	mpi_gatherv.c \
@@ -56,10 +65,29 @@ PRIVATEAPISOURCES = \
 	mpi_get_elements.c \
 	mpi_get_processor_name.c \
 	mpi_get_version.c \
+	mpi_graph_create.c \
+	mpi_graph_get.c \
+	mpi_graph_map.c \
+	mpi_graph_neighbors.c \
+	mpi_graph_neighbors_count.c \
+	mpi_graphdims_get.c \
+	mpi_group_compare.c \
+	mpi_group_difference.c \
+	mpi_group_excl.c \
+	mpi_group_free.c \
+	mpi_group_incl.c \
+	mpi_group_intersection.c \
+	mpi_group_range_excl.c \
+	mpi_group_range_incl.c \
+	mpi_group_rank.c \
+	mpi_group_size.c \
+	mpi_group_translate_ranks.c \
+	mpi_group_union.c \
 	mpi_ibsend.c \
 	mpi_init.c \
 	mpi_initialized.c \
 	mpi_intercomm_create.c \
+	mpi_intercomm_merge.c \
 	mpi_iprobe.c \
 	mpi_irecv.c \
 	mpi_irsend.c \
@@ -77,6 +105,7 @@ PRIVATEAPISOURCES = \
 	mpi_reduce_scatter.c \
 	mpi_request_free.c \
 	mpi_rsend.c \
+	mpi_rsend_init.c \
 	mpi_scan.c \
 	mpi_scatter.c \
 	mpi_scatterv.c \
@@ -87,13 +116,16 @@ PRIVATEAPISOURCES = \
 	mpi_ssend.c \
 	mpi_ssend_init.c \
 	mpi_start.c \
-	mpi_start_all.c \
+	mpi_startall.c \
 	mpi_test.c \
 	mpi_test_cancelled.c \
 	mpi_testall.c \
+	mpi_testany.c \
 	mpi_testsome.c \
+	mpi_topo_test.c \
 	mpi_type_commit.c \
 	mpi_type_contiguous.c \
+	mpi_type_count.c \
 	mpi_type_free.c \
 	mpi_type_indexed.c \
 	mpi_type_size.c \
