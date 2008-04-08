@@ -14,6 +14,7 @@ source code checker splint (see <http://splint.org/>) for
 portability testing.
 
 For installation, please read the file INSTALL.
-The newest available version can be obtained at
+The newest available version can be obtained at the homepage of
+the Institute for Numerical Simulation of the University of Bonn,
 <http://wissrech.ins.uni-bonn.de/research/projects/nullmpi/>.
 Please direct feedback to <wildenhues@ins.uni-bonn.de>.
