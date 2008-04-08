@@ -1,7 +1,5 @@
 ## process this file with automake to produce Makefile.in
 
-SHELL	= /bin/sh
-@SET_MAKE@
 ACLOCAL_AMFLAGS = -I m4
 SUBDIRS	= src pmpi tests
 bin_SCRIPTS = bin/mpicc bin/mpiCC bin/mpiexec

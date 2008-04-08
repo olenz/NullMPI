@@ -1,6 +1,5 @@
 ## process this file with automake to produce Makefile.in
 
-SHELL	= /bin/sh
 include_HEADERS = $(PUBLICHEADERS)
 lib_LIBRARIES = libnullmpi.a
 libnullmpi_a_SOURCES = $(PUBLICHEADERS) $(PRIVATEHEADERS) $(PRIVATESOURCES)
