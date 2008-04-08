@@ -1,0 +1,11 @@
+-DHAVE_CONFIG_H
+-I../build/src
+-I.
+-paramuse
+-warnposixheaders
++singleinclude
++boolint
+-retvalint
+-boolops
++loopexec
+-warnlintcomments
