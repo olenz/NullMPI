@@ -1,5 +1,5 @@
 The usual GNU installation instructions apply.
-  /path/to/configure [OPTIONS]
+  path/to/configure [OPTIONS]
   make
   make install
 

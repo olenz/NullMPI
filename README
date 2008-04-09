@@ -5,11 +5,11 @@ for use as a uniprocessor replacement.  Use this to port your
 parallel code to machines without a MPI implementation or quick
 test-compiles.
 
-Nullmpi allows global communications, but does not implement
+Nullmpi allows global communications, but does not implement all
 point-to-point communications to self.  Timing is supported.
 Compilation options allow for debug and statistics output.
 
-Furthermore, the set of headers can be used with the static
+Furthermore, the set of MPI headers can be used with the static
 source code checker splint (see <http://splint.org/>) for
 portability testing.
 
