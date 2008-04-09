@@ -110,7 +110,8 @@ nullmpi_new_ptp(/*@dependent@*/ void *buf, size_t size, int tag, MPI_Comm comm, 
 }
 
 /*@null@*/ /*@only@*/ ptplist *
-nullmpi_queue_ptp(/*@dependent@*/ void *buf, size_t size, int tag, MPI_Comm comm, int issend)
+nullmpi_queue_ptp(/*@dependent@*/ void *buf, size_t size, int tag,
+    MPI_Comm comm, ptp_sendrecv_tag issend)
 {
   ptplist *other;
   ptplist *r = nullmpi_new_ptp(buf, size, tag, comm, issend);
@@ -130,8 +131,6 @@ nullmpi_queue_ptp(/*@dependent@*/ void *buf, size_t size, int tag, MPI_Comm comm
       } else
 	nullmpi_append_ptp(recvlist, r);
       break;
-    default:
-      /*NOTREACHED*/ ;
     }
   }
   return r;
@@ -149,7 +148,7 @@ nullmpi_delete_ptp(/*@null@*/ /*@only@*/ ptplist *r)
 
 int
 nullmpi_blockptp(void *buf, int count, MPI_Datatype type, int tag,
-    MPI_Comm comm, MPI_Status *status, int issend)
+    MPI_Comm comm, MPI_Status *status, ptp_sendrecv_tag issend)
 {
   int err = -1;
   ptplist r;
