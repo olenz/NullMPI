@@ -89,7 +89,7 @@ nullmpi_ptp(/*@out@*/ ptplist *r, /*@dependent@*/ void *buf, size_t size,
     int tag, MPI_Comm comm, int issend)
 {
   nullmpi_assert(buf != NULL);
-  nullmpi_assert(tag >= 0 && (tag <= MPI_TAG_UB || tag == MPI_ANY_TAG));
+  nullmpi_assert((tag >= 0 && tag <= MPI_TAG_UB) || tag == MPI_ANY_TAG);
   r->next = NULL;
   r->prev = NULL;
   r->buf = buf;
