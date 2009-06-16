@@ -15,13 +15,13 @@ CVS2CLFLAGS = --accum
 
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \
-	rm -f mpirun$(EXEEXT) mpicxx$(EXEEXT) && \
-	$(LN_S) mpiexec$(EXEEXT) mpirun$(EXEEXT) && \
-	$(LN_S) mpiCC$(EXEEXT) mpicxx$(EXEEXT)
+	rm -f mpirun mpicxx && \
+	$(LN_S) mpiexec mpirun && \
+	$(LN_S) mpiCC mpicxx
 
 uninstall-hook:
-	rm -f $(DESTDIR)$(bindir)/mpirun$(EXEEXT) \
-	      $(DESTDIR)$(bindir)/mpicxx$(EXEEXT)
+	rm -f $(DESTDIR)$(bindir)/mpirun \
+	      $(DESTDIR)$(bindir)/mpicxx
 
 dist-hook:
 	-cd $(srcdir) && test -d CVS && $(CVS2CL) $(CVS2CLFLAGS)
