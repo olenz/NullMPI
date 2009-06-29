@@ -1,0 +1,5 @@
+config.h
+config.h.in
+libnullmpi.a
+nullmpi_conf.h
+stamp-h1

@@ -1,0 +1,13 @@
+*.o
+.deps
+Makefile
+Makefile.in
+_configs.sed
+aclocal.m4
+autom4te.cache
+build*
+config.cache
+config.log
+config.status
+configure
+nullmpi-*.tar.*
