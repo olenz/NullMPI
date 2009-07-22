@@ -1,7 +1,7 @@
 #! /bin/sh
 prog="$0"
 usage="echo $prog [ -hv ] [ -n <procs> | -np <procs> ] <program>"
-version="echo @PACKAGE@-@VERSION@"
+version="echo @PACKAGE_STRING@"
 
 eat=no
 fin=
