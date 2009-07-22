@@ -1,3 +1,9 @@
+nullmpi-0.7 released.
+- Works on Windows (with MinGW and spaces in install prefix).
+- Development moved to git tree.
+- PMPI functions are now overridable individually.
+- More complete MPI 1.2 function stubs.
+
 nullmpi-0.6 released.
 - MPI_Pcontrol for debug output available.
 - some nonblocking functions added.
