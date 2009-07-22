@@ -1,11 +1,11 @@
-.TH mpiCC 1 "@VERSION@" "@PACKAGE@" "MPI Commands" \" -*- nroff -*-
+.TH mpicxx 1 "@VERSION@" "@PACKAGE@" "MPI Commands" \" -*- nroff -*-
 .SH NAME
-mpiCC \- compile and link MPI programs written in C++
+mpicxx \- compile and link MPI programs written in C++
 .SH SYNOPSIS
-.B mpiCC
+.B mpicxx
 [\fB\-hv\fR] [\fB\-CC=\fICXX\fR] [compile options]
 .br
-.B mpicxx
+.B mpicc
 [\fB\-hv\fR] [\fB\-CC=\fICXX\fR] [compile options]
 .SH DESCRIPTION
 These commands can be used to compile and link MPI programs written in

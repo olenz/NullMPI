@@ -68,7 +68,28 @@ AH_BOTTOM([#if defined(_NULLMPI_HAVE_ATTRIBUTE) || defined(HAVE_ATTRIBUTE)
 #endif
 /*@=namechecks@*/])
 
+# We ought to be testing all of
+# - build tree
+# - destdir tree
+# - install tree
+# file system semantics.  However, we cannot expect to be able to write
+# anywhere except the first at configure time.  So punt if that fails.
+AC_CACHE_CHECK([whether the file system is case sensitive],
+	       [nullmpi_cv_case_sensitive],
+[rm -f conftest.ca?
+echo hello > conftest.cas
+echo bye > conftest.caS
+if grep bye conftest.cas >/dev/null; then
+  nullmpi_cv_case_sensitive=no
+else
+  nullmpi_cv_case_sensitive=yes
+fi
+rm -f conftest.ca?
+])
+AM_CONDITIONAL([CASE_SENSITIVE_FILE_SYSTEM], [test $nullmpi_cv_case_sensitive = yes])
+
+
 AC_CONFIG_FILES([Makefile src/Makefile pmpi/Makefile tests/Makefile
-		 man/mpicc.1 man/mpiCC.1 man/mpiexec.1])
-AC_CONFIG_FILES([bin/mpicc bin/mpiCC bin/mpiexec], [chmod u+x bin/mpi*])
+		 man/mpicc.1 man/mpicxx.1 man/mpiexec.1])
+AC_CONFIG_FILES([bin/mpicc bin/mpicxx bin/mpiexec], [chmod u+x bin/mpi*])
 AC_OUTPUT

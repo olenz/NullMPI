@@ -37,7 +37,7 @@ do
 		;;
 	esac
 	set x "$@" "$1"
-       	shift
+	shift
 	shift
 done
 case $DoLink in
