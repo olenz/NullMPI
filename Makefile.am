@@ -12,14 +12,14 @@ EXTRA_DIST = bin/mpicc.in bin/mpiCC.in bin/mpiexec.in \
 DISTCLEANFILES = _configs.sed src/nullmpi_conf.h
 
 install-exec-hook:
-	cd $(DESTDIR)$(bindir) && \
+	cd "$(DESTDIR)$(bindir)" && \
 	rm -f mpirun mpicxx && \
 	$(LN_S) mpiexec mpirun && \
 	$(LN_S) mpiCC mpicxx
 
 uninstall-hook:
-	rm -f $(DESTDIR)$(bindir)/mpirun \
-	      $(DESTDIR)$(bindir)/mpicxx
+	rm -f "$(DESTDIR)$(bindir)/mpirun" \
+	      "$(DESTDIR)$(bindir)/mpicxx"
 
 GIT = git
 
