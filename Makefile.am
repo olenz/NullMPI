@@ -10,8 +10,6 @@ EXTRA_DIST = bin/mpicc.in bin/mpiCC.in bin/mpiexec.in \
 	     man/mpicc.1.in man/mpiCC.1.in man/mpicxx.1 \
 	     man/mpiexec.1.in man/mpirun.1 man/MPI_Init.3
 DISTCLEANFILES = _configs.sed src/nullmpi_conf.h
-CVS2CL = touch ChangeLog && cvs2cl
-CVS2CLFLAGS = --accum
 
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \
@@ -23,6 +21,8 @@ uninstall-hook:
 	rm -f $(DESTDIR)$(bindir)/mpirun \
 	      $(DESTDIR)$(bindir)/mpicxx
 
+GIT = git
+
 dist-hook:
-	-cd $(srcdir) && test -d CVS && $(CVS2CL) $(CVS2CLFLAGS)
+	-cd $(srcdir) && test -d .git && ( $(GIT) --version ) >/dev/null 2>&1 && $(GIT) log > ChangeLog
 	-cp $(srcdir)/ChangeLog $(distdir)
