@@ -5,8 +5,8 @@ version="echo @PACKAGE_STRING@"
 prefix="@prefix@"
 exec_prefix="@exec_prefix@"
 MPICXX="@CXX@"
-MPICPPFLAGS="-I@includedir@"
-MPILDFLAGS="-L@libdir@ -lnullmpi"
+MPICPPFLAGS="'-I@includedir@'"
+MPILDFLAGS="'-L@libdir@' -lnullmpi"
 
 set x "$@"
 shift
@@ -51,5 +51,5 @@ case $DoCompile in
 	;;
 esac
 
-exec $MPICXX $MPICPPFLAGS "$@" $MPILDFLAGS
+eval exec "$MPICXX $MPICPPFLAGS \"\$@\" $MPILDFLAGS"
 exit 1

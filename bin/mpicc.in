@@ -5,8 +5,8 @@ version="echo @PACKAGE_STRING@"
 prefix="@prefix@"
 exec_prefix="@exec_prefix@"
 MPICC="@CC@"
-MPICPPFLAGS="-I@includedir@"
-MPILDFLAGS="-L@libdir@ -lnullmpi"
+MPICPPFLAGS="'-I@includedir@'"
+MPILDFLAGS="'-L@libdir@' -lnullmpi"
 
 DoLink=1
 DoCompile=0
@@ -47,5 +47,5 @@ case $DoCompile in
 	;;
 esac
 
-exec $MPICC $MPICPPFLAGS "$@" $MPILDFLAGS
+eval exec "$MPICC $MPICPPFLAGS \"\$@\" $MPILDFLAGS"
 exit 1
