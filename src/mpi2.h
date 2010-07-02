@@ -202,6 +202,8 @@ typedef void (MPI_Win_errhandler_fn)(MPI_Win *, int *, ...);
 /*@constant null MPI_ERRCODES_IGNORE;@*/
 /*@constant null MPI_Status *MPI_STATUS_IGNORE;@*/
 /*@constant null MPI_Status *MPI_STATUSES_IGNORE;@*/
+#define MPI_STATUS_IGNORE (MPI_Status *)1
+#define MPI_STATUSES_IGNORE (MPI_Status *)1
 
 /* C constants specifying ignored input */
 /*@constant null MPI_Fint *MPI_F_STATUSES_IGNORE;@*/
