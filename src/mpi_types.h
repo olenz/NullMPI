@@ -275,7 +275,7 @@ typedef enum
   MPI_MAXLOC
 } MPI_Op;
 
-typedef int MPI_Aint;
+typedef long MPI_Aint;
 typedef int MPI_Errhandler;
 
 typedef struct
