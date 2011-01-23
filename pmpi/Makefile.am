@@ -1,7 +1,7 @@
 ## process this file with automake to produce Makefile.in
 
-lib_LIBRARIES = libnullpmpi.a
-libnullpmpi_a_SOURCES = \
+lib_LTLIBRARIES = libnullpmpi.la
+libnullpmpi_la_SOURCES = \
 	abort.c \
 	allgather.c \
 	allgatherv.c \
@@ -114,5 +114,7 @@ libnullpmpi_a_SOURCES = \
 	waitany.c \
 	waitsome.c \
 	pmpi_wrap.h
+
+libnullpmpi_la_LIBADD = ../src/libnullmpi.la
 
 AM_CPPFLAGS = -I$(srcdir)/../src -DPROFILELIB

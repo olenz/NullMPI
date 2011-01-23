@@ -1,8 +1,8 @@
 ## process this file with automake to produce Makefile.in
 
 include_HEADERS = $(PUBLICHEADERS)
-lib_LIBRARIES = libnullmpi.a
-libnullmpi_a_SOURCES = $(PUBLICHEADERS) $(PRIVATEHEADERS) $(PRIVATESOURCES)
+lib_LTLIBRARIES = libnullmpi.la
+libnullmpi_la_SOURCES = $(PUBLICHEADERS) $(PRIVATEHEADERS) $(PRIVATESOURCES)
 
 PUBLICHEADERS = \
 	mpi.h \

@@ -9,15 +9,16 @@ AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_HEADERS([src/config.h])
 AX_PREFIX_CONFIG_H([src/nullmpi_conf.h], [_NULLMPI])
 AM_INIT_AUTOMAKE([1.7 foreign -Wall])
+AC_CONFIG_MACRO_DIR([m4])
 
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_CPP
 AC_PROG_INSTALL
-AC_PROG_RANLIB
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
+LT_INIT
 
 # Checks for header files.
 AC_HEADER_STDC
